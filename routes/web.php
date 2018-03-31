@@ -18,3 +18,5 @@ Route::get('auth/{provider}', 'Auth\RegisterController@redirectToProvider');
 Route::get('auth/{provider}/callback', 'Auth\RegisterController@handleProviderCallback');
 Route::get('word/{id}', 'wordController@show', function ($id){
 })->where('id', '[0-9]+');
+Route::get('add/', 'wordController@create');
+Route::post('words/', 'wordController@store');
