@@ -16,3 +16,5 @@ Auth::routes();
 Route::get('/home', 'HomeController@index');
 Route::get('auth/{provider}', 'Auth\RegisterController@redirectToProvider');
 Route::get('auth/{provider}/callback', 'Auth\RegisterController@handleProviderCallback');
+Route::get('word/{id}', 'defController@show', function ($id){
+})->where('id', '[0-9]+');
