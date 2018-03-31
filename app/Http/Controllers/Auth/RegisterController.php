@@ -67,24 +67,24 @@ class RegisterController extends Controller
      *
      * @return Response
      */
-    public function redirectToProvider()
+    public function redirectToProvider($provider)
     {
-        return Socialite::driver('google')->redirect();
+        return Socialite::driver($provider)->redirect();
     }
     /**
      * Obtain the user information from GitHub.
      *
      * @return Response
      */
-    public function handleProviderCallback()
+    public function handleProviderCallback($provider)
     {
         try
         {
-            $socialUser = Socialite::driver('google')->user();
+            $socialUser = Socialite::driver($provider)->user();
         }
         catch(\Exception $e)
         {
-          //  return redirect('/');
+            return redirect('/');
         }
         //check if we have logged provider
         $socialProvider = SocialProvider::where('provider_id',$socialUser->getId())->first();
@@ -96,7 +96,7 @@ class RegisterController extends Controller
                 ['name' => $socialUser->getName()]
             );
             $user->socialProviders()->create(
-                ['provider_id' => $socialUser->getId(), 'provider' => 'google']
+                ['provider_id' => $socialUser->getId(), 'provider' => $provider]
             );
         }
         else
