@@ -25,6 +25,7 @@ class Defs extends Migration
             $table->integer('dislike_count')->unsigned();
             //$table->string('add_date');
             $table->timestamps();
+            $table->datetime('expires_at')->nullable($value = true);
         });
         Schema::table('Defs', function(Blueprint $table)
         {

@@ -21,6 +21,7 @@ class CreateSocialProvidersTable extends Migration
             $table->string('provider_id');
             $table->string('provider');
             $table->timestamps();
+            $table->datetime('expires_at')->nullable($value = true);
         });
     }
 

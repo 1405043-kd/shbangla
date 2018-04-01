@@ -21,6 +21,7 @@ class Words extends Migration
             $table->string('name');
           //  $table->string('add_date');
             $table->timestamps();
+            $table->datetime('expires_at')->nullable($value = true);
         });
         Schema::table('Words', function(Blueprint $table)
         {
