@@ -117,8 +117,8 @@ class wordController extends Controller
     public function show($id)
     {
         //
-        $def = DB::select('select * from Defs where word_id = ?', [2]);
-        $word= DB::table('Words')->where('id', 2)->first();
+        $def = DB::select('select * from Defs where word_id = ?', [$id]);
+        $word= DB::table('Words')->where('id', $id)->first();
     //    $def=4;
 
         // show the view and pass the nerd to it
