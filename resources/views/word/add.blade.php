@@ -1,11 +1,4 @@
-@extends('layouts.app')
-
-<link href="//netdna.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-<script src="//netdna.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
-<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
-
-
-@section('content')
+@extends('layouts.mainlayout')
 
 
 <!--
@@ -29,11 +22,11 @@
 
 
 
-    <!------ Include the above in your HEAD tag ---------->
+<!------ Include the above in your HEAD tag --------->
 
-    <div class="container">
-        <div class="col-md-8">
-            <div class="form-area">
+
+
+                @section('content')
 
                 <form action="/words" method="post" >
                     <div class="form-group">
@@ -45,18 +38,18 @@
                         <input type="text" class="form-control" name="name" placeholder="শব্দ" required>
                     </div>
                     <div class="form-group">
-                        <textarea type="text" class="form-control" name="def" placeholder="ব্যাখ্যা বনাম অর্থ" maxlength="140" rows="6"></textarea>
+                        <textarea type="text" class="form-control" name="def" placeholder="ব্যাখ্যা বনাম অর্থ" maxlength="80" rows="4"></textarea>
                     </div>
                     <div class="form-group">
-                        <textarea type="text" class="form-control" name="sentence_ex" placeholder="উদাহরণ" maxlength="140" rows="4" required></textarea>
+                        <textarea type="text" class="form-control" name="sentence_ex" placeholder="উদাহরণ" maxlength="80" rows="4" required></textarea>
                     </div>
                     <div class="form-group">
                         <input type="text" class="form-control" name="tags" placeholder="উৎস" required>
                     </div>
 
 
-                    <button type="submit" id="submit" name="submit" class="btn btn-primary pull-right">Submit Form</button>
+                    <button type="submit" id="submit" name="submit" class="btn btn-primary pull-right">ধোঁকাও</button>
                 </form>
-            </div>
-        </div>
-    </div>
+                @endsection
+
+

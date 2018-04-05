@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
+
 class HomeController extends Controller
 {
     /**
@@ -23,6 +24,8 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+       // return view('home');
+        $word = \DB::table('Words')->pluck('name','id')->toArray();
+        return view('home', ['words' => $word]);
     }
 }

@@ -43,7 +43,7 @@
         <div class="collapse navbar-collapse" id="navbarResponsive">
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item active">
-                    <a class="nav-link" href="#">Home
+                    <a class="nav-link"  href={{ url('/') }}>Home
                         <span class="sr-only">(current)</span>
                     </a>
                 </li>
@@ -54,7 +54,7 @@
                     <a class="nav-link" href="{{ url('/register') }}">register</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Contact</a>
+                    <a class="nav-link" href="{{ url('/add') }}">dhukao</a>
                 </li>
             </ul>
         </div>
@@ -70,7 +70,7 @@
         <div class="col-md-8">
 
 
-            @yield('content')
+           @yield('content')
 
         </div>
 
@@ -81,13 +81,19 @@
             <div class="card my-4">
                 <h5 class="card-header">Search</h5>
                 <div class="card-body">
+                <label for="words">Select user</label>
+                <select name="word_id" id="words" class="form-control">
+                    @foreach($words as $key => $user)
+                        <option value="{{ $key }}">{{ $user }}</option>
+                    @endforeach
+                </select>
 
                 </div>
             </div>
 
             <!-- Categories Widget -->
             <div class="card my-4">
-                <h5 class="card-header">উতস</h5>
+                <h5 class="card-header">উহস</h5>
                 <div class="card-body">
                     <div class="row">
                         <div class="col-lg-6">

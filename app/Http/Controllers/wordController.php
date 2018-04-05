@@ -33,7 +33,9 @@ class wordController extends Controller
     public function create()
     {
         //return \View::make('word/add');
-        return view('word.add');
+        $word = DB::table('Words')->pluck('name','id')->toArray();
+        return view('word.add', ['words' => $word]);
+        //return view('word.add');
     }
 
     /**
@@ -105,7 +107,8 @@ class wordController extends Controller
 
 
         //return $request->all();
-        return "fuck you :)";
+        $word = DB::table('Words')->pluck('name','id')->toArray();
+        return view('layouts.mainlayout', ['words' => $word]);
     }
 
     /**

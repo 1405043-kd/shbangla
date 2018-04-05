@@ -10,8 +10,10 @@
 |
 */
 Route::get('/', function () {
-    return view('welcome');
+    $word = DB::table('Words')->pluck('name','id')->toArray();
+    return view('layouts.mainlayout', ['words' => $word]);
 });
+
 Auth::routes();
 Route::get('/home', 'HomeController@index');
 Route::get('auth/{provider}', 'Auth\RegisterController@redirectToProvider');
@@ -20,3 +22,7 @@ Route::get('word/{id}', 'wordController@show', function ($id){
 })->where('id', '[0-9]+');
 Route::get('add/', 'wordController@create');
 Route::post('words/', 'wordController@store');
+Route::get('/saad', function () {
+    return view('temp');
+});
+
