@@ -36,25 +36,28 @@
 <!-- Navigation -->
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
     <div class="container">
-        <a class="navbar-brand" href="#">গোগা বাংলা</a>
+        <a class="navbar-brand" href="{{ url('/home') }}">গোগা বাংলা</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarResponsive">
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item active">
-                    <a class="nav-link"  href={{ url('/') }}>Home
+                    <a class="nav-link"  href={{ url('/home') }}>ঘরঘরঘর
                         <span class="sr-only">(current)</span>
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ url('/login') }}">লগ ইন</a>
+                    <a class="nav-link" href="{{ url('/login') }}">ঘরে ঢুকি</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ url('/register') }}">register</a>
+                    <a class="nav-link" href="{{ url('/register') }}">ঘরে রেজিস্টার করি</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ url('/add') }}">dhukao</a>
+                    <a class="nav-link" href="{{ url('/add') }}">ঢুকাবো</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link"  href="{{ url('/logout') }}"> পালাই </a>
                 </li>
             </ul>
         </div>
@@ -81,10 +84,10 @@
             <div class="card my-4">
                 <h5 class="card-header">Search</h5>
                 <div class="card-body">
-                <label for="words">Select user</label>
+                <label for="words">শব্দ খুঁজি</label>
                 <select name="word_id" id="words" class="form-control">
-                    @foreach($words as $key => $user)
-                        <option value="{{ $key }}">{{ $user }}</option>
+                    @foreach($words as $key => $word)
+                        <option value="{{ $key }}">{{ $word }}</option>
                     @endforeach
                 </select>
 
@@ -130,7 +133,7 @@
             <div class="card my-4">
                 <h5 class="card-header">আজকের শব্দ</h5>
                 <div class="card-body">
-                    You can put anything you want inside of these side widgets. They are easy to use, and feature the new Bootstrap 4 card containers!
+                   আমরা বোক্সোদ না। এইটাতেও একদিন শব্দে শব্দে ভরে দিবো।
                 </div>
             </div>
 
@@ -158,6 +161,14 @@
 <script>
     $(document).ready(function(){
         $('#words').select2();
+    });
+</script>
+<script>
+    $(document).ready(function(){
+        $('#tags').select2({
+            placeholder : 'কই পাইসেন বলেন',
+            tags: true
+        });
     });
 </script>
 

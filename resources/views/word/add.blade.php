@@ -44,12 +44,26 @@
                         <textarea type="text" class="form-control" name="sentence_ex" placeholder="উদাহরণ" maxlength="80" rows="4" required></textarea>
                     </div>
                     <div class="form-group">
-                        <input type="text" class="form-control" name="tags" placeholder="উৎস" required>
+                        <label for="tags"> কই পাইসেন বলেন</label>
+                        <select name="taga[]" id="tags" class="form-control" multiple="multiple">
+                            @foreach($tags as $key => $t)
+                                <option value="{{ $key }}">{{ $t}}</option>
+                            @endforeach
+                        </select>
                     </div>
 
 
                     <button type="submit" id="submit" name="submit" class="btn btn-primary pull-right">ধোঁকাও</button>
                 </form>
+                <script>
+                    $(document).ready(function(){
+                        $('#tags').select2({
+                            placeholder : 'কই পাইসেন বলেন',
+                            tags: true
+
+                    });
+                    });
+                </script>
                 @endsection
 
 

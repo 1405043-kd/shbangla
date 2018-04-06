@@ -25,4 +25,4 @@ Route::post('words/', 'wordController@store');
 Route::get('/saad', function () {
     return view('temp');
 });
-
+Route::get('logout', '\App\Http\Controllers\Auth\LoginController@logout');

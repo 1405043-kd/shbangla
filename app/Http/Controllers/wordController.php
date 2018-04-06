@@ -34,7 +34,8 @@ class wordController extends Controller
     {
         //return \View::make('word/add');
         $word = DB::table('Words')->pluck('name','id')->toArray();
-        return view('word.add', ['words' => $word]);
+        $tag = DB::table('tags')->pluck('name','id')->toArray();
+        return view('word.add', ['words' => $word, 'tags'=>$tag]);
         //return view('word.add');
     }
 
@@ -52,8 +53,20 @@ class wordController extends Controller
         $tag = new Tag();
         $tagtable = new TagTable();
 
-        $tag->name=$request->tags;
-        $tag->save();
+        $tagd[] = $request->taga;
+// Note that $tags will be an array.
+        $i=0;
+     //   dd(sizeof($tagd[$i]));
+        while (sizeof($tagd[$i])>= $i) {
+            if(!is_numeric($tagd[$i][$i])) {
+              //  dd($tagd[$i][$i]);
+                $tag->name=$tagd[$i][$i];
+                $tag->save();
+            }
+            $i+=$i+1;
+        }//   dd($request->tag_id);
+
+
 
 
 
@@ -130,7 +143,7 @@ class wordController extends Controller
             'nam'   => $word
         ];
 
-        return \View::make('word/index')
+        return \View::make('word/')
             ->with($data);
     }
 
