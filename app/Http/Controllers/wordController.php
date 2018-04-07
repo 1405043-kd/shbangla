@@ -20,9 +20,25 @@ class wordController extends Controller
      * @return \Illuminate\Http\Response
      */
 
-    public function index()
+    public function index(Request $request)
     {
-        //
+//        $s = $request->input('s');
+//        $words = Word::latest()
+//            ->scopeSearch($s);
+//        return view('word.index',$s);
+
+        $def = DB::select('select * from Defs where word_id = ?', [$request->s]);
+        $word= DB::table('Words')->where('id', $request->s)->first();
+        //    $def=4;
+
+        // show the view and pass the nerd to it
+        $data = [
+            'Def'  => $def,
+            'nam'   => $word
+        ];
+
+        return \View::make('word/index')
+            ->with($data);
     }
 
     /**
@@ -54,21 +70,15 @@ class wordController extends Controller
         $tagtable = new TagTable();
 
         $tagd[] = $request->taga;
-// Note that $tags will be an array.
-        $i=0;
-     //   dd(sizeof($tagd[$i]));
-        while (sizeof($tagd[$i])>= $i) {
-            if(!is_numeric($tagd[$i][$i])) {
-              //  dd($tagd[$i][$i]);
-                $tag->name=$tagd[$i][$i];
+
+        for($i=0;$i<sizeof($tagd[0]);$i++){
+            if(!is_numeric($tagd[0][$i])) {
+                echo($tagd[0][$i]);
+                $tag = new Tag();
+                $tag->name=$tagd[0][$i];
                 $tag->save();
             }
-            $i+=$i+1;
-        }//   dd($request->tag_id);
-
-
-
-
+        }
 
         $result = DB::table('Words')
             ->select('id')
@@ -100,13 +110,6 @@ class wordController extends Controller
         $def->save();
 
 
-        $tag_id = DB::table('Tags')
-            ->select('id')
-            ->where('name', '=', $tag->name)
-            ->get();
-
-        $array_tag = json_decode(json_encode($tag_id[0]), true);
-
         $def_id = DB::table('Defs')
             ->select('id')
             ->where('def', '=', $request->def)
@@ -114,9 +117,28 @@ class wordController extends Controller
 
         $array_def = json_decode(json_encode($def_id[0]), true);
 
-        $tagtable['def_id']=$array_def['id'];
-        $tagtable['tag_id']=$array_tag['id'];
-        $tagtable->save();
+        for($i=0;$i<sizeof($tagd[0]);$i++) {
+            $tagtable = new TagTable();
+            $tagtable['def_id']=$array_def['id'];
+            if(!is_numeric($tagd[0][$i])) {
+                $tag_id = DB::table('Tags')
+                    ->select('id')
+                    ->where('name', '=', $tagd[0][$i])
+                    ->get();
+                $array_tag = json_decode(json_encode($tag_id[0]), true);
+                $tagtable['tag_id']=$array_tag['id'];
+            }
+            else{
+                $tagtable['tag_id']=$tagd[0][$i];
+            }
+            $tagtable->save();
+        }
+
+
+
+
+
+
 
 
         //return $request->all();
@@ -143,7 +165,7 @@ class wordController extends Controller
             'nam'   => $word
         ];
 
-        return \View::make('word/')
+        return \View::make('word/index')
             ->with($data);
     }
 

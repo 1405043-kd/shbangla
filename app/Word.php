@@ -18,4 +18,9 @@ class Word extends Model
 
       //  $word->save();
     }
+
+    public function scopeSearch($query, $s){
+        return $query->where('name', 'like', '%' .$s. '%');
+    }
+
 }

@@ -84,13 +84,19 @@
             <div class="card my-4">
                 <h5 class="card-header">Search</h5>
                 <div class="card-body">
-                <label for="words">শব্দ খুঁজি</label>
-                <select name="word_id" id="words" class="form-control">
-                    @foreach($words as $key => $word)
-                        <option value="{{ $key }}">{{ $word }}</option>
-                    @endforeach
-                </select>
+                    <form action="drow/" method="get" class="form-inline">
+                        <label for="words">শব্দ খুঁজি</label>
+                        <select name="s" id="words" class="form-control">
+                            @foreach($words as $key => $word)
+                                <option value="{{ $key }}">{{ $word }}</option>
+                            @endforeach
+                        </select>
 
+                        <div class="form-group">
+                            <button class="btn btn-success" type="submit">খুঁজি চলেন</button>
+                        </div>
+
+                    </form>
                 </div>
             </div>
 
@@ -160,17 +166,12 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
 <script>
     $(document).ready(function(){
-        $('#words').select2();
-    });
-</script>
-<script>
-    $(document).ready(function(){
-        $('#tags').select2({
-            placeholder : 'কই পাইসেন বলেন',
-            tags: true
+        $('#words').select2({
+            placeholder : "আমি অনেক লোনলি"
         });
     });
 </script>
+
 
 </body>
 
