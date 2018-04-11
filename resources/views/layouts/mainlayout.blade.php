@@ -2,7 +2,17 @@
 <html lang="en">
 
 <head>
+    <style type="text/css">
 
+        #share-buttons img {
+            width: 35px;
+            padding: 5px;
+            border: 0;
+            box-shadow: aliceblue;
+            display: inline;
+        }
+
+    </style>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
@@ -84,7 +94,7 @@
             <div class="card my-4">
                 <h5 class="card-header">Search</h5>
                 <div class="card-body">
-                    <form action="drow/" method="get" class="form-inline">
+                    <form action="http://localhost:8000/drow/" method="get" class="form-inline" value="Submit form">
                         <label for="words">শব্দ খুঁজি</label>
                         <select name="s" id="words" class="form-control">
                             @foreach($words as $key => $word)
@@ -167,7 +177,8 @@
 <script>
     $(document).ready(function(){
         $('#words').select2({
-            placeholder : "আমি অনেক লোনলি"
+            placeholder : "আমি অনেক লোনলি",
+            words: true
         });
     });
 </script>

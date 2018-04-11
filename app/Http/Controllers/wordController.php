@@ -22,23 +22,31 @@ class wordController extends Controller
 
     public function index(Request $request)
     {
-//        $s = $request->input('s');
-//        $words = Word::latest()
-//            ->scopeSearch($s);
-//        return view('word.index',$s);
-
         $def = DB::select('select * from Defs where word_id = ?', [$request->s]);
-        $word= DB::table('Words')->where('id', $request->s)->first();
-        //    $def=4;
 
+        $users= DB::select('select id,name from users');
+        //  print($def[0]->name);
+        $w= DB::table('Words')->where('id', $request->s)->first();
+        $word = DB::table('Words')->pluck('name','id')->toArray();
+        $tag= DB::select('select * from tagtable tt join tags t on t.id=tt.tag_id where def_id = ?', [$def[0]->id]);
+        //    $def=4;
+        //dd($word);
         // show the view and pass the nerd to it
-        $data = [
-            'Def'  => $def,
-            'nam'   => $word
-        ];
+        //$def[0]['user_name']=$def->name;
+
+//        $def['user_name']=$def->name;
+     //   dd($def);
+//        $def['user_name']=$def->name;
+
+
+
+
+        $data = ['Def'  => $def, 'words'=>$word, 'nam'=>$w, 'tags'=> $tag, 'user'=> $users];
 
         return \View::make('word/index')
             ->with($data);
+
+
     }
 
     /**
@@ -154,19 +162,30 @@ class wordController extends Controller
      */
     public function show($id)
     {
-        //
         $def = DB::select('select * from Defs where word_id = ?', [$id]);
-        $word= DB::table('Words')->where('id', $id)->first();
-    //    $def=4;
 
+        //  print($def[0]->name);
+        $w= DB::table('Words')->where('id', $id)->first();
+        $word = DB::table('Words')->pluck('name','id')->toArray();
+        $users= DB::select('select id,name from users');
+        $tag= DB::select('select * from tagtable tt join tags t on t.id=tt.tag_id where def_id = ?', [$def[0]->id]);
+        //    $def=4;
+        //dd($word);
         // show the view and pass the nerd to it
-        $data = [
-            'Def'  => $def,
-            'nam'   => $word
-        ];
+        //$def[0]['user_name']=$def->name;
+
+//        $def['user_name']=$def->name;
+        //   dd($def);
+//        $def['user_name']=$def->name;
+
+
+
+
+        $data = ['Def'  => $def, 'words'=>$word, 'nam'=>$w, 'tags'=> $tag, 'user'=>$users];
 
         return \View::make('word/index')
             ->with($data);
+
     }
 
     /**
