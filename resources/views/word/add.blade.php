@@ -44,9 +44,26 @@
                         <textarea type="text" class="form-control" name="sentence_ex" placeholder="উদাহরণ" maxlength="80" rows="4" required></textarea>
                     </div>
                     <div class="form-group">
-                        <label for="tags"> কই পাইসেন বলেন</label>
                         <select name="taga[]" id="tags" class="form-control" multiple="multiple">
                             @foreach($tags as $key => $t)
+                                <option value="{{ $key }}">{{ $t}}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="words">প্রতিশব্দ জানলে বলেন নাকি উলটাপালটা শব্দ দিয়া দিসেন কে জানে </label>
+                        <select name="synonym" id="syns" class="form-control">
+
+                            @foreach($words as $key => $t)
+                                <option value="{{ $key }}">{{ $t}}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="words">বিপরীত শব্দ জানলে বলেন নাকি এইটাও জানেন না? </label>
+                        <select name="antonym" id="ants" class="form-control">
+
+                            @foreach($words as $key => $t)
                                 <option value="{{ $key }}">{{ $t}}</option>
                             @endforeach
                         </select>
@@ -62,6 +79,21 @@
                             tags: true
 
                     });
+                    });
+                </script>
+                <script>
+                    $(document).ready(function(){
+                        $('#syns').select2({
+                            placeholder : 'প্রতিশব্দ জানলে বলেন নাকি উলটাপালটা শব্দ দিয়া দিসেন কে জানে'
+
+                        });
+                    });
+                </script>
+                <script>
+                    $(document).ready(function(){
+                        $('#ants').select2({
+                            placeholder : 'বিপরীত শব্দ জানলে লেখেন'
+                        });
                     });
                 </script>
                 @endsection

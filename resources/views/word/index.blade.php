@@ -2,10 +2,11 @@
 
 @section('content')
 
-    <h2>{{ $nam->name }} added by
+    <br>
+    <h4>{{ $nam->name }} ব্যাপারটা গোগাবাংলায় প্রথম ব্যাখ্যা করছেন
         @foreach( $user as $u )
             @if ($u->id==$nam->adder_id)
-                {{ $u->name }} </h2>
+                {{ $u->name }} </h4>
             @endif
         @endforeach
 
@@ -26,38 +27,26 @@
                     @endif
                     @endforeach
                 <br><br>
-                <h4> সম্ভার </h4>
+                <h4> ত্যাগসমূহ </h4>
+            <div class="tags" >
                 @foreach( $tags as $t )
                     <a href="http://localhost:8000/tag/{{$t->tag_id}}">{{ $t->name }}    </a>
                 @endforeach
-
-            <div id="share-buttons">
-                <!-- Facebook -->
-                <a href="http://www.facebook.com/sharer.php?u={{URL::current()}}" target="_blank">
-                    <img src="https://simplesharebuttons.com/images/somacro/facebook.png" alt="Facebook" />
-                </a>
-
-                <!-- Google+ -->
-                <a href="https://plus.google.com/share?url={{URL::current()}}" target="_blank">
-                    <img src="https://simplesharebuttons.com/images/somacro/google.png" alt="Google" />
-                </a>
-
-
-                <!-- Reddit -->
-                <a href="http://reddit.com/submit?url{{ URL::current() }}&amp;title=Simple Share Buttons" target="_blank">
-                    <img src="https://simplesharebuttons.com/images/somacro/reddit.png" alt="Reddit" />
-                </a>
-
-                <!-- Twitter -->
-                <a href="https://twitter.com/share?url={{ URL::current() }}&amp;text=Simple%20Share%20Buttons&amp;hashtags=simplesharebuttons" target="_blank">
-                    <img src="https://simplesharebuttons.com/images/somacro/twitter.png" alt="Twitter" />
-                </a>
-
-
             </div>
+            <p>শেয়ার করুন</p>
 
-        </div>
+            <!-- Social Media Share Buttons -->
+
+            <a class="social-link facebook" href="http://www.facebook.com/sharer.php?u={{ URL::current() }}" id="fb-share"
+                 rel="nofollow" target="_blank" title="Share on Facebook" ><i class="fa fa-facebook"></i> ফেসবুক</a>
+            <a class="social-link twitter" href="https://twitter.com/share?url={{ URL::current() }};text=Simple%20Share%20Buttons&amp" id="tweet" rel="nofollow" target="_blank"
+               title="Tweet this Page"><i class="fa fa-twitter"></i> টুইট</a>
+            <a class="social-link gplus" id="gplus-share" href="https://plus.google.com/share?url={{ URL::current() }}" title="share it">
+                <i class="fa fa-google-plus"></i>গুগল প্লাস</a>
+    </div>
             @endforeach
     </div>
 
 @endsection
+<script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+<script type="text/javascript" src="public/social.js">	</script>

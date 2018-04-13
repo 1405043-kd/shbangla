@@ -23,7 +23,5 @@ Route::get('word/{id}', 'wordController@show', function ($id){
 Route::get('add/', 'wordController@create');
 Route::post('words/', 'wordController@store');
 Route::get('drow/', 'wordController@index');
-Route::get('tag/{id}/drow/', 'wordController@index', function ($id){})->where('id', '[0-9]+');
-Route::get('tag/drow/', 'wordController@index');
 Route::get('logout', '\App\Http\Controllers\Auth\LoginController@logout');
 Route::get('tag/{id}', 'tagController@show', function ($id){})->where('id', '[0-9]+');
