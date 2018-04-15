@@ -43,18 +43,20 @@
         <div class="collapse navbar-collapse" id="navbarResponsive">
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item active">
-                    <a class="nav-link" href="#">Home
-                        <span class="sr-only">(current)</span>
+                    <a class="nav-link"  href={{ url('/home') }}>ঘরঘরঘর
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ url('/login') }}">লগ ইন</a>
+                    <a class="nav-link" href="{{ url('/login') }}">ঘরে ঢুকি</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ url('/register') }}">register</a>
+                    <a class="nav-link" href="{{ url('/register') }}">ঘরে রেজিস্টার করি</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Contact</a>
+                    <a class="nav-link" href="{{ url('/add') }}">ঢুকাবো</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link"  href="{{ url('/logout') }}"> পালাই </a>
                 </li>
             </ul>
         </div>
@@ -67,66 +69,9 @@
     <div class="row">
 
         <!-- Blog Entries Column -->
-        <div class="col-md-8">
-
+        <div class="col-md-12">
 
             @yield('content')
-
-        </div>
-
-        <!-- Sidebar Widgets Column -->
-        <div class="col-md-4">
-
-            <!-- Search Widget -->
-            <div class="card my-4">
-                <h5 class="card-header">Search</h5>
-                <div class="card-body">
-
-                </div>
-            </div>
-
-            <!-- Categories Widget -->
-            <div class="card my-4">
-                <h5 class="card-header">উতস</h5>
-                <div class="card-body">
-                    <div class="row">
-                        <div class="col-lg-6">
-                            <ul class="list-unstyled mb-0">
-                                <li>
-                                    <a href="#">Web De</a>
-                                </li>
-                                <li>
-                                    <a href="#">HTML</a>
-                                </li>
-                                <li>
-                                    <a href="#">Freebies</a>
-                                </li>
-                            </ul>
-                        </div>
-                        <div class="col-lg-6">
-                            <ul class="list-unstyled mb-0">
-                                <li>
-                                    <a href="#">JavaScript</a>
-                                </li>
-                                <li>
-                                    <a href="#">CSS</a>
-                                </li>
-                                <li>
-                                    <a href="#">Tutorials</a>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Side Widget -->
-            <div class="card my-4">
-                <h5 class="card-header">আজকের শব্দ</h5>
-                <div class="card-body">
-                    You can put anything you want inside of these side widgets. They are easy to use, and feature the new Bootstrap 4 card containers!
-                </div>
-            </div>
 
         </div>
 

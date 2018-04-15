@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Antonym;
+use App\Synonym;
 use App\Word;
 use App\Def;
 use App\Tag;
@@ -76,6 +78,8 @@ class wordController extends Controller
         $def= new Def();
         $tag = new Tag();
         $tagtable = new TagTable();
+        $ant= new Antonym();
+        $syn=new Synonym();
 
         $tagd[] = $request->taga;
 
@@ -92,7 +96,6 @@ class wordController extends Controller
             ->select('id')
             ->where('name', '=', $request->name)
             ->first();
-        $user = Auth::user();
         $word['name']=$request->name;
         $word['adder_id']=auth()->user()->id;
         if(!$result)
@@ -140,13 +143,22 @@ class wordController extends Controller
                 $tagtable['tag_id']=$tagd[0][$i];
             }
             $tagtable->save();
+            }
+
+        $synonym=$request->synonym;
+
+        if ($synonym) {
+            $syn['syn_id']=$synonym;
+            $syn['word_id']=$array['id'];
+            $syn->save();
         }
 
-
-
-
-
-
+        $antonym=$request->antonym;
+        if ($antonym) {
+            $ant['ant_id']=$antonym;
+            $ant['word_id']=$array['id'];
+            $ant->save();
+        }
 
 
         //return $request->all();

@@ -3,22 +3,17 @@
 @section('content')
 
     <br>
-    <h4>
-        @foreach( $tags as $t )
-            #{{ $t->name }}
-        @endforeach
-    </h4>
-
-
+    <h4>#{{ $nam->name }} যা যা গোগাবাংলায় ব্যাখ্যা করছেন</h4>
     <div class="card my-4">
         @foreach( $Def as $d )
             <div class="card-body">
 
-                <h2 class="card-header">{{ $d->name }}</h2>
+                <h2 class="card-header">{{ $words[$d->word_id] }}</h2>
                 <br>
                 <a href="#">Like </a> {{$d->like_count}}
                 <a href="#">Dislike </a> {{$d->dislike_count}}
                 <br>
+
                 <br>
                 {{ $d->def }} <br><br>
 
@@ -31,7 +26,12 @@
                     @endif
                 @endforeach
                 <br><br>
-
+                <h4> ত্যাগসমূহ </h4>
+                <div class="tags" >
+                    @foreach( $tags as $t )
+                        <a href="http://localhost:8000/tag/{{$t->tag_id}}">{{ $t->name }}    </a>
+                    @endforeach
+                </div>
                 <p>শেয়ার করুন</p>
 
                 <!-- Social Media Share Buttons -->

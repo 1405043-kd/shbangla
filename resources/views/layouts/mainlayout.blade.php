@@ -4,6 +4,48 @@
 <head>
     <style type="text/css">
 
+        /*.social-like .like { float:right }*/
+        /*.social-like .count { float:right }*/
+
+        /*.social-dislike .like { float:right }*/
+        /*.social-dislike .count { float:right }*/
+
+        .social-like, .social-dislike {
+            border: none;
+            outline: none;
+            font-size: 16px;
+            /*width: 48%;*/
+            background-color: #03A9F4;
+            color: #fff;
+        }
+
+        .social-like {
+            border-top-left-radius: 5px;
+            text-align: right;
+        }
+
+        .social-dislike {
+            border-top-right-radius: 5px;
+            text-align: left;
+        }
+
+        .count, .like, .dislike {
+            padding:10px;
+        }
+
+        .count, .dislike {
+            background-color: #03A9F4;
+            border-radius: 50%;
+            font-size:12px;
+        }
+
+        .dislike {
+            margin-left: -13px;
+        }
+
+        .count {
+            margin-right: -10px;
+        }
         .card-body h2{
             background: #3498a5;
             color:#fff
@@ -119,7 +161,7 @@
     <link href="{{ url('/css/home/bloghome.css') }}" rel="stylesheet">
 
     <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" >
-
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css">
     <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
@@ -145,21 +187,31 @@
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item active">
                     <a class="nav-link"  href={{ url('/home') }}>ঘরঘরঘর
-                        <span class="sr-only">(current)</span>
                     </a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ url('/login') }}">ঘরে ঢুকি</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ url('/register') }}">ঘরে রেজিস্টার করি</a>
-                </li>
+
+                @if (auth()->guest())
+                    {{-- Show register and login links --}}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url('/login') }}">ঘরে ঢুকি</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url('/register') }}">ঘরে রেজিস্টার করি</a>
+                    </li>
+
+                @endif
+
                 <li class="nav-item">
                     <a class="nav-link" href="{{ url('/add') }}">ঢুকাবো</a>
+
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link"  href="{{ url('/logout') }}"> পালাই </a>
-                </li>
+                @if (!auth()->guest())
+                    {{-- Show register and login links --}}
+                    <li class="nav-item">
+                        <a class="nav-link"  href="{{ url('/logout') }}"> পালাই </a>
+                    </li>
+                @endif
+
             </ul>
         </div>
     </div>
