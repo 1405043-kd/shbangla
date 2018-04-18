@@ -16,10 +16,11 @@
 
                 <h2 class="card-header">{{ $nam->name }}</h2>
                 <br>
-                <a href="#">Like </a> {{$d->like_count}}
-                <a href="#">Dislike </a> {{$d->dislike_count}}
-                <br>
 
+                <i type="button" value="submit" id="btnMenu" class="fa fa-thumbs-up" onclick="setColor('btnMenu')"> </i>
+                <a href="#">Dislike </a> {{$d->dislike_count}}
+                <i onclick="myFunction2(this)" class="fa fa-thumbs-down"></i>
+                <br>
                 <br>
                 {{ $d->def }} <br><br>
 
@@ -51,7 +52,6 @@
             </div>
         @endforeach
     </div>
+    {{ $Def->links() }}
 
 @endsection
-<script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
-<script type="text/javascript" src="public/social.js">	</script>

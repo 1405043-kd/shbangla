@@ -24,7 +24,7 @@ class wordController extends Controller
 
     public function index(Request $request)
     {
-        $def = DB::select('select * from Defs where word_id = ?', [$request->s]);
+        $def = DB::table('Defs')->where('word_id', $request->s)->paginate(5);
 
         $users= DB::select('select id,name from users');
         //  print($def[0]->name);
@@ -45,6 +45,9 @@ class wordController extends Controller
 
         $data = ['Def'  => $def, 'words'=>$word, 'nam'=>$w, 'tags'=> $tag, 'user'=> $users];
 
+        if ($request->ajax()) {
+            return Response::json(\View::make('word/index')->with($data));
+        }
         return \View::make('word/index')
             ->with($data);
 
@@ -174,7 +177,8 @@ class wordController extends Controller
      */
     public function show($id)
     {
-        $def = DB::select('select * from Defs where word_id = ?', [$id]);
+        $def = $def = DB::table('Defs')->where('word_id', $id)->paginate(5);
+
 
         //  print($def[0]->name);
         $w= DB::table('Words')->where('id', $id)->first();

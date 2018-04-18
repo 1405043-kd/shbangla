@@ -46,6 +46,7 @@
         .count {
             margin-right: -10px;
         }
+
         .card-body h2{
             background: #3498a5;
             color:#fff
@@ -185,6 +186,26 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarResponsive">
             <ul class="navbar-nav ml-auto">
+
+                <li class="nav-item active">
+                    <form action="http://localhost:8000/drow/" method="get" class="form-inline" value="Submit form">
+                        <br>
+                        <label for="words">লেখেন এইখানে </label><br>
+                        <select name="s" id="words" class="form-control">
+                            @foreach($words as $key => $word)
+                                <option value="{{ $key }}">{{ $word }}</option>
+                            @endforeach
+                        </select>
+
+                        <div class="form-group">
+                            <button class="btn btn-success" type="submit">চলেন দেখি</button>
+                        </div>
+
+                    </form>
+                </li>
+
+
+
                 <li class="nav-item active">
                     <a class="nav-link"  href={{ url('/home') }}>ঘরঘরঘর
                     </a>
@@ -317,14 +338,66 @@
 <!-- Bootstrap core JavaScript -->
 {{--<script src="{{url('/public/jquery/jquery.min.js')}}"></script>--}}
 {{--<script src="{{url('/public/js/bootstrap.bundle.min.js')}}"></script>--}}
+<script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
+
 <script>
+    $(window).on('hashchange', function() {
+        if (window.location.hash) {
+            var page = window.location.hash.replace('#', '');
+            if (page == Number.NaN || page <= 0) {
+                return false;
+            }
+            else {
+                getDefs(page);
+            }
+        }
+    });
+    $(document).ready(function() {
+        $(document).on('click', '.pagination a', function (e) {
+            getDefs($(this).attr('href').split('page=')[1]);
+            e.preventDefault();
+        });
+    });
+    function getDefs(page) {
+        $.ajax({
+            url : '?page=' + page,
+            dataType: 'json',
+        }).done(function (data) {
+            $('.defs').html(data);
+            location.hash = page;
+        }).fail(function () {
+            alert('Definitions could not be loaded.');
+        });
+    }
     $(document).ready(function(){
         $('#words').select2({
             placeholder : "আমি অনেক লোনলি",
             words: true
         });
     });
+    </script>
+    <script>
+    var count = 1;
+    function setColor(btnMenu) {
+        var property = document.getElementById(btnMenu);
+        //document.write(property);
+        if (count == 0) {
+            property.style.color = "#2acdef";
+            count = 1;
+        }
+        else {
+            property.style.color = "#7FFF00";
+            //property.style.color = GREEN;
+            count = 0;
+        }
+    }
+</script>
+<script>
+    function myFunction2(x) {
+        x.classList.toggle("fa-thumbs-up");
+    }
 </script>
 
 
