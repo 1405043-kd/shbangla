@@ -9,17 +9,25 @@
                 {{ $u->name }} </h4>
     @endif
     @endforeach
+    <br>
+    <h4>প্রতিশব্দঃ </h4>
+    @foreach($synonym as $syn)
+        <a href="http://localhost:8000/word/{{ $words[reset($syn)] }}" > {{ $words[reset($syn)] }} </a>
+    @endforeach
 
     <div class="card my-4">
+
+
         @foreach( $Def as $d )
-            <div class="card-body">
+            <div class="card-body" data-defid="{{ $d->id }}">
 
                 <h2 class="card-header">{{ $nam->name }}</h2>
                 <br>
 
-                <i type="button" value="submit" id="btnMenu" class="fa fa-thumbs-up" onclick="setColor('btnMenu')"> </i>
+
+                <a href="#" class="likeBtn"> Like</a>
                 <a href="#">Dislike </a> {{$d->dislike_count}}
-                <i onclick="myFunction2(this)" class="fa fa-thumbs-down"></i>
+                <i onclick="" class="fa fa-thumbs-down"></i>
                 <br>
                 <br>
                 {{ $d->def }} <br><br>
@@ -51,7 +59,10 @@
                     <i class="fa fa-google-plus"></i>গুগল প্লাস</a>
             </div>
         @endforeach
+        <ul class="pagination pagination-sm">
+            {{ $Def->links() }}
+    </ul>
     </div>
-    {{ $Def->links() }}
+
 
 @endsection

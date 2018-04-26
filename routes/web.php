@@ -26,4 +26,8 @@ Route::get('drow/', 'wordController@index');
 Route::get('member/{id}', 'UserController@index', function ($id){})->where('id', '[0-9]+');
 Route::get('logout', '\App\Http\Controllers\Auth\LoginController@logout');
 Route::get('tag/{id}', 'tagController@show', function ($id){})->where('id', '[0-9]+');
+Route::post('like/', [
+    'uses' => 'wordController@likeDef',
+    'as' => 'like'
+]);
 

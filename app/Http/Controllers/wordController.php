@@ -9,6 +9,7 @@ use App\Def;
 use App\Tag;
 use App\TagTable;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Input;
 use DB;
 use App\Quotation;
 use App\Http\Controllers\View;
@@ -21,6 +22,18 @@ class wordController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    public function likeDef(Request $request){
+        dd($request);
+        $dd = $request['def_id'];
+        $is_like = $request['isLike'] === 'true';
+        $ant = new Word();
+        $ant->name=$dd;
+        $ant->adder_id=Auth::user()->id;
+        $ant->save();
+
+
+    }
+
 
     public function index(Request $request)
     {
@@ -74,6 +87,13 @@ class wordController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
+    public function messages()
+    {
+        return [
+            'title.required' => 'খালি রাখলে হবে না মামা',
+            'sentence_ex.required'  => 'কি ভাবসো? এইটা ফাঁকা রাখতে দিবো?',
+        ];
+    }
     public function store(Request $request)
     {
         //$this->middleware('auth');
@@ -83,7 +103,6 @@ class wordController extends Controller
         $tagtable = new TagTable();
         $ant= new Antonym();
         $syn=new Synonym();
-
         $tagd[] = $request->taga;
 
         for($i=0;$i<sizeof($tagd[0]);$i++){
@@ -194,10 +213,22 @@ class wordController extends Controller
         //   dd($def);
 //        $def['user_name']=$def->name;
 
+       // dd(0123);
+        $ancestors = DB::select('select @pv := t.word_id from
+                    (select * from synonym order by syn_id desc) t join 
+                     (select @pv := ?) tmp where t.syn_id = @pv', [$id]);
+
+
+        //dd(reset($ancestors[0]));
 
 
 
-        $data = ['Def'  => $def, 'words'=>$word, 'nam'=>$w, 'tags'=> $tag, 'user'=>$users];
+
+
+
+
+
+$data = ['Def'  => $def, 'words'=>$word, 'nam'=>$w, 'tags'=> $tag, 'user'=>$users, 'synonym'=>$ancestors];
 
         return \View::make('word/index')
             ->with($data);

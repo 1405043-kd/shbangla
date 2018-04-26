@@ -166,6 +166,8 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css">
     <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 
 
 {{--<link rel="stylesheet" href="{{URL::to('/')}}/public/css/bootstrap.min.css" >--}}
@@ -339,27 +341,22 @@
 {{--<script src="{{url('/public/jquery/jquery.min.js')}}"></script>--}}
 {{--<script src="{{url('/public/js/bootstrap.bundle.min.js')}}"></script>--}}
 <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
-<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
+
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
 
 <script>
     $(window).on('hashchange', function() {
-        if (window.location.hash) {
-            var page = window.location.hash.replace('#', '');
-            if (page == Number.NaN || page <= 0) {
-                return false;
-            }
-            else {
-                getDefs(page);
-            }
-        }
-    });
-    $(document).ready(function() {
-        $(document).on('click', '.pagination a', function (e) {
-            getDefs($(this).attr('href').split('page=')[1]);
+
+        $('body').on('click', '.pagination a', function(e) {
             e.preventDefault();
+            //  $('#load').append('<img style="position: absolute; left: 0; top: 0; z-index: 100000;" >');
+            getDefs($(this).attr('href').split('page=')[1]);
         });
     });
+    $(document).ready(function() {
+    });
+
     function getDefs(page) {
         $.ajax({
             url : '?page=' + page,
@@ -378,21 +375,10 @@
         });
     });
     </script>
-    <script>
-    var count = 1;
-    function setColor(btnMenu) {
-        var property = document.getElementById(btnMenu);
-        //document.write(property);
-        if (count == 0) {
-            property.style.color = "#2acdef";
-            count = 1;
-        }
-        else {
-            property.style.color = "#7FFF00";
-            //property.style.color = GREEN;
-            count = 0;
-        }
-    }
+
+<script>
+    var token = '{{ Session::token() }}';
+    var urlLike = '{{ route('like') }}';
 </script>
 <script>
     function myFunction2(x) {
