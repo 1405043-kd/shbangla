@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Antonym;
+use App\Likedibo;
 use App\Synonym;
 use App\Word;
 use App\Def;
@@ -22,16 +23,24 @@ class wordController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function likeDef(Request $request){
-        dd($request);
-        $dd = $request['def_id'];
-        $is_like = $request['isLike'] === 'true';
-        $ant = new Word();
-        $ant->name=$dd;
-        $ant->adder_id=Auth::user()->id;
-        $ant->save();
+    public function likeDef(){
+        $word_id = DB::table('Defs')
+            ->select('word_id')
+            ->where('id', '=', $_POST['def_id'])
+            ->get()
+            ->first();
+//        $likedibo=new Likedibo();
+//        $likedibo['liker']=auth()->user()->id;
+//        $likedibo['def_id']=$_POST['def_id'];
+//        $likedibo['word_id']=$word_id;
+//        $likedibo->save();
+        //DB::insert('INSERT INTO `likedibo`(`id`, `liker`, `word_id`, `def_id`, `created_at`, `updated_at`, `expires_at`) VALUES (1,1,1,1,1,1,1)');
 
+//        $wordid=DB::select('select word_id from Defs where id = ?', [$_POST['def_id']]);
 
+        DB::table('likedibo')->insert(
+            ['liker' =>auth()->user()->id,'word_id'=>$word_id->word_id, 'def_id'=>$_POST['def_id']]
+        );
     }
 
 
@@ -198,7 +207,7 @@ class wordController extends Controller
      */
     public function show($id)
     {
-        $def = $def = DB::table('Defs')->where('word_id', $id)->paginate(5);
+        $def = DB::table('Defs')->where('word_id', $id)->paginate(5);
 
 
         //  print($def[0]->name);

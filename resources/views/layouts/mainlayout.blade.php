@@ -340,7 +340,7 @@
 <!-- Bootstrap core JavaScript -->
 {{--<script src="{{url('/public/jquery/jquery.min.js')}}"></script>--}}
 {{--<script src="{{url('/public/js/bootstrap.bundle.min.js')}}"></script>--}}
-<script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+<script src="http://code.jquery.com/jquery-2.1.1.min.js"></script>
 
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
@@ -389,21 +389,30 @@
 <script>
 $('.likeBtn').click(function(event){
     event.preventDefault();
-    var isLIke= event.target.previousElementSibling==null;
-    console.log(23435);
-    def_id=event.target.parentNode.dataset[defid];
+    def_id=$(this).attr('id');
+    alert('You nigga clicked on def_id '+def_id);
+    // var isLIke= event.target.previousElementSibling==null;
+    // console.log(23435);
+    // def_id=event.target.parentNode.dataset[defid];
 
-    alert('Definitions could not loaded.');
+
+
     $.ajax({
         method: 'POST',
-        url:urlLike,
-        data:{isLIke:isLIke, def_id:def_id, _token:token}
+        url: urlLike,
+        data:{
+            'liked': 1,
+            'def_id': def_id,
+            '_token': token,
+        },
+    })
+        .success(function (r) {
+            alert('database e dhuika gese hogar nati :\') ');
+            console.log(r);
         })
-        .success(function () {
-
-        })
-        .fail(function () {
+        .fail(function (r) {
             alert('Definitions could not be loaded.');
+            console.log(r);
         });
 });
 

@@ -24,8 +24,10 @@
 
                 <h2 class="card-header">{{ $nam->name }}</h2>
                 <br>
-                <article class="post" data-defid="{{ $d->id }}">
-                <a href="#" class="likeBtn"> Like {{$d->like_count}}</a>
+                {{--<article class="post" data-defid="{{ $d->id }}">--}}
+                <span>
+                    <a href="" class="likeBtn" id="<?php echo $d->id; ?>"> Like {{$d->like_count}}</a>
+                </span>
                 <a href="#"> Dislike  {{$d->dislike_count}} </a>
                 <i onclick="" class="fa fa-thumbs-down"></i>
                 <br>
