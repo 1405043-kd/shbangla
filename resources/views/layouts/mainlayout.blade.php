@@ -379,11 +379,34 @@
 <script>
     var token = '{{ Session::token() }}';
     var urlLike = '{{ route('like') }}';
+    var def_id;
 </script>
 <script>
     function myFunction2(x) {
         x.classList.toggle("fa-thumbs-up");
     }
+</script>
+<script>
+$('.likeBtn').click(function(event){
+    event.preventDefault();
+    var isLIke= event.target.previousElementSibling==null;
+    console.log(23435);
+    def_id=event.target.parentNode.dataset[defid];
+
+    alert('Definitions could not loaded.');
+    $.ajax({
+        method: 'POST',
+        url:urlLike,
+        data:{isLIke:isLIke, def_id:def_id, _token:token}
+        })
+        .success(function () {
+
+        })
+        .fail(function () {
+            alert('Definitions could not be loaded.');
+        });
+});
+
 </script>
 
 

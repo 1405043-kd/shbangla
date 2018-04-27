@@ -19,14 +19,14 @@
 
 
         @foreach( $Def as $d )
-            <div class="card-body" data-defid="{{ $d->id }}">
+            <div class="card-body">
+
 
                 <h2 class="card-header">{{ $nam->name }}</h2>
                 <br>
-
-
-                <a href="#" class="likeBtn"> Like</a>
-                <a href="#">Dislike </a> {{$d->dislike_count}}
+                <article class="post" data-defid="{{ $d->id }}">
+                <a href="#" class="likeBtn"> Like {{$d->like_count}}</a>
+                <a href="#"> Dislike  {{$d->dislike_count}} </a>
                 <i onclick="" class="fa fa-thumbs-down"></i>
                 <br>
                 <br>
@@ -57,6 +57,7 @@
                    title="Tweet this Page"><i class="fa fa-twitter"></i> টুইট</a>
                 <a class="social-link gplus" id="gplus-share" href="https://plus.google.com/share?url={{ URL::current() }}" title="share it">
                     <i class="fa fa-google-plus"></i>গুগল প্লাস</a>
+                </article>
             </div>
         @endforeach
         <ul class="pagination pagination-sm">
