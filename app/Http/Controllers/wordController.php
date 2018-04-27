@@ -53,10 +53,12 @@ class wordController extends Controller
      //   dd($def);
 //        $def['user_name']=$def->name;
 
+        $ancestors = DB::select('select @pv := t.word_id from
+                    (select * from synonym order by syn_id desc) t join 
+                     (select @pv := ?) tmp where t.syn_id = @pv', [$request->s]);
 
 
-
-        $data = ['Def'  => $def, 'words'=>$word, 'nam'=>$w, 'tags'=> $tag, 'user'=> $users];
+        $data = ['Def'  => $def, 'words'=>$word, 'nam'=>$w, 'tags'=> $tag, 'user'=> $users, 'synonym'=>$ancestors];
 
         if ($request->ajax()) {
             return Response::json(\View::make('word/index')->with($data));
@@ -234,6 +236,59 @@ $data = ['Def'  => $def, 'words'=>$word, 'nam'=>$w, 'tags'=> $tag, 'user'=>$user
             ->with($data);
 
     }
+
+
+
+    public function showName($name){
+
+
+        $id= DB::table('Words')->where('name', $name)->first();
+        $id=$id->id;
+
+        $def = $def = DB::table('Defs')->where('word_id', $id)->paginate(5);
+
+
+        //  print($def[0]->name);
+        $w= DB::table('Words')->where('id', $id)->first();
+        $word = DB::table('Words')->pluck('name','id')->toArray();
+        $users= DB::select('select id,name from users');
+        $tag= DB::select('select * from tagtable tt join tags t on t.id=tt.tag_id where def_id = ?', [$def[0]->id]);
+        //    $def=4;
+        //dd($word);
+        // show the view and pass the nerd to it
+        //$def[0]['user_name']=$def->name;
+
+//        $def['user_name']=$def->name;
+        //   dd($def);
+//        $def['user_name']=$def->name;
+
+        // dd(0123);
+        $ancestors = DB::select('select @pv := t.word_id from
+                    (select * from synonym order by syn_id desc) t join 
+                     (select @pv := ?) tmp where t.syn_id = @pv', [$id]);
+
+
+        //dd(reset($ancestors[0]));
+
+
+
+
+
+
+
+
+        $data = ['Def'  => $def, 'words'=>$word, 'nam'=>$w, 'tags'=> $tag, 'user'=>$users, 'synonym'=>$ancestors];
+
+        return \View::make('word/index')
+            ->with($data);
+
+    }
+
+
+
+
+
+
 
     /**
      * Show the form for editing the specified resource.

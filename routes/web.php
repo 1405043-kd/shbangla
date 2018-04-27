@@ -20,9 +20,12 @@ Route::get('auth/{provider}', 'Auth\RegisterController@redirectToProvider');
 Route::get('auth/{provider}/callback', 'Auth\RegisterController@handleProviderCallback');
 Route::get('word/{id}', 'wordController@show', function ($id){
 })->where('id', '[0-9]+');
+Route::get('word/{name}', 'wordController@showName', function ($name){
+})->where('name', '[^0-9]+');
+
 Route::get('add/', 'wordController@create');
 Route::post('words/', 'wordController@store');
-Route::get('drow/', 'wordController@index');
+Route::get('word', 'wordController@index');
 Route::get('member/{id}', 'UserController@index', function ($id){})->where('id', '[0-9]+');
 Route::get('logout', '\App\Http\Controllers\Auth\LoginController@logout');
 Route::get('tag/{id}', 'tagController@show', function ($id){})->where('id', '[0-9]+');

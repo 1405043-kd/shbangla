@@ -190,7 +190,7 @@
             <ul class="navbar-nav ml-auto">
 
                 <li class="nav-item active">
-                    <form action="http://localhost:8000/drow/" method="get" class="form-inline" value="Submit form">
+                    <form action="http://localhost:8000/word" method="get" class="form-inline" value="Submit form">
                         <br>
                         <label for="words">লেখেন এইখানে </label><br>
                         <select name="s" id="words" class="form-control">
@@ -260,7 +260,7 @@
             <div class="card my-4">
                 <h5 class="card-header">খোঁজ লাগান</h5>
                 <div class="card-body">
-                    <form action="http://localhost:8000/drow/" method="get" class="form-inline" value="Submit form">
+                    <form action="http://localhost:8000/word" method="get" class="form-inline" value="Submit form">
                         <br>
                         <label for="words">লেখেন এইখানে </label><br>
                         <select name="s" id="words" class="form-control">
