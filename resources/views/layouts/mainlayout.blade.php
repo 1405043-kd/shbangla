@@ -9,6 +9,16 @@
 
         /*.social-dislike .like { float:right }*/
         /*.social-dislike .count { float:right }*/
+        /* Navbar */
+
+
+
+        .select2-search { background-color: gainsboro }
+        .select2-search input { background-color: floralwhite }
+        .select2-results { background-color: #b8daff}
+
+
+
 
         .social-like, .social-dislike {
             border: none;
@@ -18,7 +28,9 @@
             background-color: #03A9F4;
             color: #fff;
         }
-
+        .searchText{
+            color: #b1b7ba;
+        }
         .social-like {
             border-top-left-radius: 5px;
             text-align: right;
@@ -242,27 +254,27 @@
 'ত','থ','দ','ধ','ন','প','ফ','ব','ভ','ম'])
 
 <!-- Navigation -->
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+<nav class="navbar navbar-expand-lg navbar-dark bg-secondary fixed-top">
     <div class="container">
         <a class="navbar-brand" href="{{ url('/home') }}">গোগা বাংলা</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="true" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarResponsive">
             <ul class="navbar-nav ml-auto">
 
-                <li class="nav-item active">
+                <li class="nav-item">
                     <form action="http://localhost:8000/word" method="get" class="form-inline" value="Submit form">
                         <br>
-                        <label for="words">লেখেন এইখানে </label><br>
-                        <select name="s" id="words" class="form-control">
+                        <label for="words"> <span class="searchText">যা জানতে চান লিখেন এইখানে    </span> </label>
+                        <select name="s" id="words" class="form-control" style="height: 50">
                             @foreach($words as $key => $word)
                                 <option value="{{ $key }}">{{ $word }}</option>
                             @endforeach
                         </select>
 
                         <div class="form-group">
-                            <button class="btn btn-success" type="submit">চলেন দেখি</button>
+                            <button class="btn btn-default" type="submit" style="background-color:#b1b7ba">চলেন দেখি</button>
                         </div>
 
                     </form>
@@ -270,7 +282,7 @@
 
 
 
-                <li class="nav-item active">
+                <li class="nav-item">
                     <a class="nav-link"  href={{ url('/home') }}>ঘরঘরঘর
                     </a>
                 </li>
@@ -403,6 +415,7 @@
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
 
+
 <script>
     $(window).on('hashchange', function() {
 
@@ -429,8 +442,16 @@
     $(document).ready(function(){
         $('#words').select2({
             placeholder : "আমি অনেক লোনলি",
-            words: true
+            disabled: false,
+            theme:"classic",
+            words: true,
+            selectOnClose: true
         });
+        $('select').select2()
+            .on("select2:open", function () {
+                $('.select2-results__options').niceScroll();
+            });
+
     });
     </script>
 
