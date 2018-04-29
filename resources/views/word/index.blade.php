@@ -10,10 +10,19 @@
     @endif
     @endforeach
     <br>
-    <h4>প্রতিশব্দঃ </h4>
-    @foreach($synonym as $syn)
-        <a href="http://localhost:8000/word/{{ $words[reset($syn)] }}" > {{ $words[reset($syn)] }} </a>
-    @endforeach
+    <button class="accordion">প্রতিশব্দঃ </button>
+    <div class="panel">
+        @foreach($synonym as $syn)
+            <a href="http://localhost:8000/word/{{ $words[reset($syn)] }}" > {{ $words[reset($syn)] }} </a>
+        @endforeach
+    </div>
+
+    <button class="accordion">বিপরীত শব্দঃ</button>
+    <div class="panel">
+        @foreach($synonym as $syn)
+            <a href="http://localhost:8000/word/{{ $words[reset($syn)] }}" > {{ $words[reset($syn)] }} </a>
+        @endforeach
+    </div>
 
     <div class="card my-4">
 
@@ -26,10 +35,12 @@
                 <br>
                 {{--<article class="post" data-defid="{{ $d->id }}">--}}
                 <span>
-                    <a href="" class="likeBtn" id="<?php echo $d->id; ?>"> Like {{$d->like_count}}</a>
+                    <a href="" class="likeBtn" id="<?php echo $d->id; ?>" onClick="window.location.reload()"> সেরা বুঝাইছে {{$d->like_count}}</a>
                 </span>
-                <a href="#"> Dislike  {{$d->dislike_count}} </a>
-                <i onclick="" class="fa fa-thumbs-down"></i>
+                <br>
+                <span>
+                    <a href="" class="dislikeBtn" id="<?php echo $d->id; ?>" onClick="window.location.reload()"> গোগা বুঝাইছে {{$d->dislike_count}}</a>
+                </span>
                 <br>
                 <br>
                 {{ $d->def }} <br><br>
@@ -62,9 +73,7 @@
                 </article>
             </div>
         @endforeach
-        <ul class="pagination pagination-sm">
             {{ $Def->links() }}
-    </ul>
     </div>
 
 

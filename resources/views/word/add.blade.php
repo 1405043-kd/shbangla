@@ -28,20 +28,43 @@
 
                 @section('content')
 
-                <form action="/words" method="post" >
+                <form action="/words" method="post">
                     <div class="form-group">
                         <input name="_token" type="hidden" value="{{ csrf_token() }}"/>
                     </div>
                     <br style="clear:both">
                     <h3 style="margin-bottom: 25px; text-align: center;">শব্দ করি যোগ </h3>
+
                     <div class="form-group">
-                        <input type="text" class="form-control" name="name" placeholder="শব্দ" required>
+                        <input type="text" class="form-control" id="name" name="name" placeholder="শব্দ">
+                        @if ($errors->get('name'))
+                            <div class="alert alert-danger">
+                                @foreach ($errors->get('name') as $message)
+                                    <li>{{ $message }}</li>
+                                 @endforeach
+                            </div>
+                        @endif
+
                     </div>
                     <div class="form-group">
-                        <textarea type="text" class="form-control" name="def" placeholder="ব্যাখ্যা বনাম অর্থ" maxlength="80" rows="4"></textarea>
+                        <textarea type="text" class="form-control" id="def" name="def" placeholder="ব্যাখ্যা বনাম অর্থ" maxlength="80" rows="4"></textarea>
+                        @if ($errors->get('def'))
+                            <div class="alert alert-danger">
+                                @foreach ($errors->get('def') as $message)
+                                    <li>{{ $message }}</li>
+                                @endforeach
+                            </div>
+                        @endif
                     </div>
                     <div class="form-group">
-                        <textarea type="text" class="form-control" name="sentence_ex" placeholder="উদাহরণ" maxlength="80" rows="4" required></textarea>
+                        <textarea type="text" class="form-control" id="sentence_ex" name="sentence_ex" placeholder="উদাহরণ" maxlength="80" rows="4"></textarea>
+                        @if ($errors->get('sentence_ex'))
+                        <div class="alert alert-danger">
+                                @foreach ($errors->get('sentence_ex') as $message)
+                                    <li>{{ $message }}</li>
+                                @endforeach
+                        </div>
+                        @endif
                     </div>
                     <div class="form-group">
                         <select name="taga[]" id="tags" class="form-control" multiple="multiple">
@@ -96,6 +119,27 @@
                         });
                     });
                 </script>
+                    <script>
+                        function validateForm(){
+                            var namecheck = document.getElementById('name').value;
+                            alert("বাংলায় লেখ শালা "+namecheck);
+                            for (var i = 0; i < namecheck.length; i++) {
+                                var code = namecheck.charCodeAt(i);
+                                console.log(code+" ");
+                            //    if (code>65 && code<70) {
+                                if (!(code < 0x0980 || code > 0x09FF)) {
+                                    alert("বাংলায় লেখ শালা");
+                                    break;
+                                }
+                            }
+                            var excheck = document.getElementById('sentence_ex').value;
+                           // if (!(excheck.contains(namecheck))) {
+                            //    alert("কি বালের উদাহরণ দেস বক্সদ!!!");
+                            //}
+                            //  var postalResult = postalRGEX.test(postalCode);
+                            //  alert("phone:"+nameResult + ", postal code: "+postalResult);
+                        }
+                    </script>
                 @endsection
 
 

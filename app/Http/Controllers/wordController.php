@@ -5,7 +5,10 @@ namespace App\Http\Controllers;
 use App\Antonym;
 use App\Likedibo;
 use App\Synonym;
+use App\Http\Controllers\Validator;
+use App\Http\Controllers\Rule;
 use App\Word;
+use Illuminate\Support\MessageBag;
 use App\Def;
 use App\Tag;
 use App\TagTable;
@@ -37,12 +40,56 @@ class wordController extends Controller
         //DB::insert('INSERT INTO `likedibo`(`id`, `liker`, `word_id`, `def_id`, `created_at`, `updated_at`, `expires_at`) VALUES (1,1,1,1,1,1,1)');
 
 //        $wordid=DB::select('select word_id from Defs where id = ?', [$_POST['def_id']]);
+      //  DB::update('UPDATE defs SET like_count=like_count+1 where id=?',$_POST['def_id']);
+        if (Auth::check()) {
+            DB::table('defs')->where('id', $_POST['def_id'])->increment('like_count');
+            DB::table('likedibo')->insert(
+                ['liker' => auth()->user()->id, 'word_id' => $word_id->word_id, 'def_id' => $_POST['def_id']]
+            );
+        }
+        //$this->index($_POST);
 
-        DB::table('likedibo')->insert(
-            ['liker' =>auth()->user()->id,'word_id'=>$word_id->word_id, 'def_id'=>$_POST['def_id']]
-        );
+
     }
 
+
+    public function dislikeDef(){
+        $word_id = DB::table('Defs')
+            ->select('word_id')
+            ->where('id', '=', $_POST['def_id'])
+            ->get()
+            ->first();
+//        $likedibo=new Likedibo();
+//        $likedibo['liker']=auth()->user()->id;
+//        $likedibo['def_id']=$_POST['def_id'];
+//        $likedibo['word_id']=$word_id;
+//        $likedibo->save();
+        //DB::insert('INSERT INTO `likedibo`(`id`, `liker`, `word_id`, `def_id`, `created_at`, `updated_at`, `expires_at`) VALUES (1,1,1,1,1,1,1)');
+
+//        $wordid=DB::select('select word_id from Defs where id = ?', [$_POST['def_id']]);
+        //  DB::update('UPDATE defs SET like_count=like_count+1 where id=?',$_POST['def_id']);
+        if (Auth::check()) {
+            DB::table('defs')->where('id', $_POST['def_id'])->increment('dislike_count');
+            DB::table('dislikemarbo')->insert(
+                ['liker' => auth()->user()->id, 'word_id' => $word_id->word_id, 'def_id' => $_POST['def_id']]
+            );
+        }
+
+        //$this->index($_POST);
+
+
+    }
+
+
+
+    public function lettersearch($id)
+    {
+        $w= DB::table('Words')->where('name','like', $id. '%')->get()->toArray();
+        $word = DB::table('Words')->pluck('name','id')->toArray();
+       // dd($w);
+        return \View::make('letter')
+            ->with(['words'=>$word, 'letter_search'=>$w]);
+    }
 
     public function index(Request $request)
     {
@@ -96,18 +143,34 @@ class wordController extends Controller
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @return array
      */
-    public function messages()
-    {
-        return [
-            'title.required' => 'খালি রাখলে হবে না মামা',
-            'sentence_ex.required'  => 'কি ভাবসো? এইটা ফাঁকা রাখতে দিবো?',
-        ];
-    }
+
     public function store(Request $request)
     {
         //$this->middleware('auth');
+        $hello=$request->name;
+//        Validator::extend('exists', function($attribute,$value,$hello,$validator) {
+//            if (contains($value,$hello)) {
+//                return true;
+//            }
+//            return false;
+//        });
+
+        $rules=[
+            'name' => array('required','regex:/^[\p{Bengali}]{0,100}$/u'),
+            'def' => 'required|min:12',
+            //'sentence_ex'=> ["required" , "max:255", "in:?"]
+            'sentence_ex' => 'required|in:'.$hello
+        ];
+        $messages = [
+            'name.required' => 'english handaile hobe na',
+            'name.regex' =>"বাংলা ছাড়া হবে না মামা",
+            'sentence_ex.required'  => 'কি ভাবসো? এইটা ফাঁকা রাখতে দিবো?',
+        ];
+        $this->validate($request,$rules,$messages);
+
+
         $word= new Word();
         $def= new Def();
         $tag = new Tag();

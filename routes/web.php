@@ -25,6 +25,10 @@ Route::get('word/{name}', 'wordController@showName', function ($name){
 
 Route::get('add/', 'wordController@create');
 Route::post('words/', 'wordController@store');
+
+Route::get('letter/{id}', 'wordController@lettersearch', function ($id){
+})->where('id', '[^0-9]+');
+
 Route::get('word', 'wordController@index');
 Route::get('member/{id}', 'UserController@index', function ($id){})->where('id', '[0-9]+');
 Route::get('logout', '\App\Http\Controllers\Auth\LoginController@logout');
@@ -32,5 +36,9 @@ Route::get('tag/{id}', 'tagController@show', function ($id){})->where('id', '[0-
 Route::post('/like', [
     'uses' => 'wordController@likeDef',
     'as' => 'like'
+]);
+Route::post('/dislike', [
+    'uses' => 'wordController@dislikeDef',
+    'as' => 'dislike'
 ]);
 

@@ -51,6 +51,41 @@
             background: #3498a5;
             color:#fff
         }
+         .accordion {
+             background-color: #eee;
+             color: #444;
+             cursor: pointer;
+             padding: 18px;
+             width: 100%;
+             border: none;
+             text-align: left;
+             outline: none;
+             font-size: 15px;
+             transition: 0.4s;
+         }
+
+        .active, .accordion:hover {
+            background-color: #ccc;
+        }
+        .accordion:after {
+            content: '\02795'; /* Unicode character for "plus" sign (+) */
+            font-size: 13px;
+            color: #777;
+            float: right;
+            margin-left: 5px;
+        }
+
+        .active:after {
+            content: "\2796"; /* Unicode character for "minus" sign (-) */
+        }
+
+        .panel {
+            padding: 0 18px;
+            background-color: white;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.2s ease-out;
+        }
         .tags a {
             display: inline-block;
             height: 24px;
@@ -145,7 +180,31 @@
             background-color:#fff;
             color:#ff9600;
         }
+        .btn-group button {
+            background-color: #4CAF50; /* Green background */
+            border: 1px solid green; /* Green border */
+            color: white; /* White text */
+            padding: 10px 24px; /* Some padding */
+            cursor: pointer; /* Pointer/hand icon */
+            float: left; /* Float the buttons side by side */
+        }
 
+        /* Clear floats (clearfix hack) */
+        .btn-group:after {
+            content: "";
+            clear: both;
+            display: table;
+        }
+
+        .btn-group button:not(:last-child) {
+            border-right: none; /* Prevent double borders */
+        }
+
+        /* Add a background color on hover */
+        .btn-group button:hover {
+            color: #3e8e41;
+            background-color: white;
+        }
     </style>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -178,6 +237,9 @@
 
 
 <body>
+@php ($x=0)
+@php ($names = ['ক','খ','গ','ঘ','ঙ','চ','ছ','জ','ঝ','ঞ','ট','ঠ','ড','ঢ','ণ',
+'ত','থ','দ','ধ','ন','প','ফ','ব','ভ','ম'])
 
 <!-- Navigation -->
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
@@ -258,22 +320,18 @@
 
             <!-- Search Widget -->
             <div class="card my-4">
-                <h5 class="card-header">খোঁজ লাগান</h5>
+                <h5 class="card-header">অক্ষর পঞ্জিকা</h5>
                 <div class="card-body">
-                    <form action="http://localhost:8000/word" method="get" class="form-inline" value="Submit form">
+                    @for($t=0;$t<25;$t=$t+5)
+                    <div class="btn-group" style="width:100%">
+
+                        @for ($x=0;$x<5;$x++)
+                            <button style="width:20%" onclick="location.href='http://localhost:8000/letter/{{$names[$t+$x]}}'" type="button"> {{ $names[$t+$x] }} </button>
+                        @endfor
                         <br>
-                        <label for="words">লেখেন এইখানে </label><br>
-                        <select name="s" id="words" class="form-control">
-                            @foreach($words as $key => $word)
-                                <option value="{{ $key }}">{{ $word }}</option>
-                            @endforeach
-                        </select>
 
-                        <div class="form-group">
-                            <button class="btn btn-success" type="submit">চলেন দেখি</button>
-                        </div>
-
-                    </form>
+                    </div>
+                    @endfor
                 </div>
             </div>
 
@@ -379,6 +437,7 @@
 <script>
     var token = '{{ Session::token() }}';
     var urlLike = '{{ route('like') }}';
+    var urldisLike = '{{ route('dislike') }}';
     var def_id;
 </script>
 <script>
@@ -417,6 +476,58 @@ $('.likeBtn').click(function(event){
 });
 
 </script>
+
+<script>
+    $('.dislikeBtn').click(function(event){
+        event.preventDefault();
+        def_id=$(this).attr('id');
+        alert('You nigga clicked on def_id '+def_id);
+        // var isLIke= event.target.previousElementSibling==null;
+        // console.log(23435);
+        // def_id=event.target.parentNode.dataset[defid];
+
+
+
+        $.ajax({
+            method: 'POST',
+            url: urldisLike,
+            data:{
+                'disliked': 1,
+                'def_id': def_id,
+                '_token': token,
+            },
+        })
+            .success(function (r) {
+                alert('database e dhuika gese hogar nati :\') ');
+                console.log(r);
+            })
+            .fail(function (r) {
+                alert('Definitions could not be loaded.');
+                console.log(r);
+            });
+    });
+
+
+
+</script>
+
+<script>
+    var acc = document.getElementsByClassName("accordion");
+    var i;
+
+    for (i = 0; i < acc.length; i++) {
+        acc[i].addEventListener("click", function() {
+            this.classList.toggle("active");
+            var panel = this.nextElementSibling;
+            if (panel.style.maxHeight){
+                panel.style.maxHeight = null;
+            } else {
+                panel.style.maxHeight = panel.scrollHeight + "px";
+            }
+        });
+    }
+</script>
+
 
 
 </body>
