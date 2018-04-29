@@ -13,8 +13,17 @@
 
 
 
+        body {
+            background-color: rgba(218, 218, 218, 0.98) !important;
+        }
+
+
+
+
+
+
         .select2-search { background-color: gainsboro }
-        .select2-search input { background-color: floralwhite }
+        .select2-search input { background-color: #6c757d}
         .select2-results { background-color: #b8daff}
 
 
@@ -60,7 +69,7 @@
         }
 
         .card-body h2{
-            background: #3498a5;
+            background: #5a585a;
             color:#fff
         }
          .accordion {
@@ -254,7 +263,7 @@
 'ত','থ','দ','ধ','ন','প','ফ','ব','ভ','ম'])
 
 <!-- Navigation -->
-<nav class="navbar navbar-expand-lg navbar-dark bg-secondary fixed-top">
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
     <div class="container">
         <a class="navbar-brand" href="{{ url('/home') }}">গোগা বাংলা</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="true" aria-label="Toggle navigation">
@@ -267,7 +276,7 @@
                     <form action="http://localhost:8000/word" method="get" class="form-inline" value="Submit form">
                         <br>
                         <label for="words"> <span class="searchText">যা জানতে চান লিখেন এইখানে    </span> </label>
-                        <select name="s" id="words" class="form-control" style="height: 50">
+                        <select name="s" id="words" class="form-control">
                             @foreach($words as $key => $word)
                                 <option value="{{ $key }}">{{ $word }}</option>
                             @endforeach
