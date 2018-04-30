@@ -22,9 +22,12 @@
 
 
 
-        .select2-search { background-color: gainsboro }
-        .select2-search input { background-color: #6c757d}
-        .select2-results { background-color: #b8daff}
+        .select2-search { background-color: #f1f1f1
+        }
+        .select2-search input { background-color: #d7d7d7
+        }
+        .select2-results { background-color: #bfbfbf
+        }
 
 
 
@@ -69,8 +72,8 @@
         }
 
         .card-body h2{
-            background: #5a585a;
-            color:#fff
+            background: #343434;
+            color: #dfdfdf
         }
          .accordion {
              background-color: #eee;
@@ -451,15 +454,9 @@
     $(document).ready(function(){
         $('#words').select2({
             placeholder : "আমি অনেক লোনলি",
-            disabled: false,
-            theme:"classic",
             words: true,
-            selectOnClose: true
+
         });
-        $('select').select2()
-            .on("select2:open", function () {
-                $('.select2-results__options').niceScroll();
-            });
 
     });
     </script>
@@ -478,10 +475,10 @@
 <script>
 $('.likeBtn').click(function(event){
     event.preventDefault();
+    isLike = event.target.previousElementSibling == null;
     def_id=$(this).attr('id');
-    alert('You nigga clicked on def_id '+def_id);
+      alert('You nigga clicked on def_id '+def_id);
     // var isLIke= event.target.previousElementSibling==null;
-    // console.log(23435);
     // def_id=event.target.parentNode.dataset[defid];
 
 
@@ -490,7 +487,7 @@ $('.likeBtn').click(function(event){
         method: 'POST',
         url: urlLike,
         data:{
-            'liked': 1,
+            'isLike': isLike,
             'def_id': def_id,
             '_token': token,
         },
@@ -502,7 +499,15 @@ $('.likeBtn').click(function(event){
         .fail(function (r) {
             alert('Definitions could not be loaded.');
             console.log(r);
-        });
+        })
+        .done(function() {
+            event.target.innerText = isLike ? event.target.innerText == 'Like' ? 'You like this post' : 'Like' : event.target.innerText == 'Dislike' ? 'You don\'t like this post' : 'Dislike';
+            if (isLike) {
+                event.target.nextElementSibling.innerText = 'Dislike';
+            } else {
+                event.target.previousElementSibling.innerText = 'Like';
+            }
+    });
 });
 
 </script>

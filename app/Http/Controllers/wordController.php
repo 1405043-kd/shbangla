@@ -27,6 +27,8 @@ class wordController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function likeDef(){
+        $is_like = $_POST['isLike'] === 'true';
+        $uid = Auth::user()->id;
         $word_id = DB::table('Defs')
             ->select('word_id')
             ->where('id', '=', $_POST['def_id'])
@@ -45,8 +47,11 @@ class wordController extends Controller
             DB::table('defs')->where('id', $_POST['def_id'])->increment('like_count');
             DB::table('likedibo')->insert(
                 ['liker' => auth()->user()->id, 'word_id' => $word_id->word_id, 'def_id' => $_POST['def_id']]
-            );
-        }
+                );
+            }
+            else {
+                DB::table('defs')->where('id', $_POST['def_id'])->decrement('like_count');
+            }
         //$this->index($_POST);
 
 
@@ -96,9 +101,13 @@ class wordController extends Controller
         $def = DB::table('Defs')->where('word_id', $request->s)->paginate(5);
 
         $users= DB::select('select id,name from users');
+        $uid = Auth::user()->id;
         //  print($def[0]->name);
         $w= DB::table('Words')->where('id', $request->s)->first();
         $word = DB::table('Words')->pluck('name','id')->toArray();
+
+        $like= DB::table('likedibo')->where('word_id', $request->s)->get();
+        $dislike= DB::table('dislikemarbo')->where('word_id', $request->s)->get();
         $tag= DB::select('select * from tagtable tt join tags t on t.id=tt.tag_id where def_id = ?', [$def[0]->id]);
         //    $def=4;
         //dd($word);
@@ -114,7 +123,8 @@ class wordController extends Controller
                      (select @pv := ?) tmp where t.syn_id = @pv', [$request->s]);
 
 
-        $data = ['Def'  => $def, 'words'=>$word, 'nam'=>$w, 'tags'=> $tag, 'user'=> $users, 'synonym'=>$ancestors];
+        $data = ['Def'  => $def, 'words'=>$word, 'like'=>$like, 'dislike'=>$dislike,
+            'nam'=>$w, 'tags'=> $tag, 'user'=> $users, 'synonym'=>$ancestors];
 
         if ($request->ajax()) {
             return Response::json(\View::make('word/index')->with($data));
@@ -150,7 +160,7 @@ class wordController extends Controller
     {
         //$this->middleware('auth');
         $hello=$request->name;
-//        Validator::extend('exists', function($attribute,$value,$hello,$validator) {
+//        Validator::extend('exists', function($attribute,$value,$hello) {
 //            if (contains($value,$hello)) {
 //                return true;
 //            }
@@ -161,12 +171,16 @@ class wordController extends Controller
             'name' => array('required','regex:/^[\p{Bengali}]{0,100}$/u'),
             'def' => 'required|min:12',
             //'sentence_ex'=> ["required" , "max:255", "in:?"]
-            'sentence_ex' => 'required|in:'.$hello
+            //'sentence_ex' => 'required|in:'.$hello
+            'sentence_ex' => array('required','regex:/^[\s\S\w\W\d\W]*'. $hello .'[\s\S\w\W\d\W]*$/u')
         ];
         $messages = [
-            'name.required' => 'english handaile hobe na',
-            'name.regex' =>"বাংলা ছাড়া হবে না মামা",
-            'sentence_ex.required'  => 'কি ভাবসো? এইটা ফাঁকা রাখতে দিবো?',
+            'name.required' => 'শব্দই দিবেন না?',
+            'name.regex' =>"বাংলা দিতে হবে ভাই। এডা গোগা বাংলা",
+            'def.required' => 'ব্যাখা করবেন না? :(',
+            'def.min' => 'একটু বড় কইরা ব্যখ্যা করেন। বুঝবে না মানুষ নাইলে',
+            'sentence_ex.required'  => 'কি ভাবসেন ভাই? এইটা ফাঁকা রাইখা হান্দায়ে দিবেন?',
+            'sentence_ex.regex' =>  'উদাহরণে যদি শব্দটাই না দিলেন, তাইলে আর কিসের উদাহরণ এইটা'
         ];
         $this->validate($request,$rules,$messages);
 
@@ -272,10 +286,12 @@ class wordController extends Controller
     {
         $def = DB::table('Defs')->where('word_id', $id)->paginate(5);
 
-
+        $uid=Auth::user()->id;
         //  print($def[0]->name);
         $w= DB::table('Words')->where('id', $id)->first();
         $word = DB::table('Words')->pluck('name','id')->toArray();
+        $like= DB::table('Likedibo')->where('liker', $uid)->get();
+        $dislike= DB::table('dislikemarbo')->where('liker', $uid)->get();
         $users= DB::select('select id,name from users');
         $tag= DB::select('select * from tagtable tt join tags t on t.id=tt.tag_id where def_id = ?', [$def[0]->id]);
         //    $def=4;
@@ -302,7 +318,8 @@ class wordController extends Controller
 
 
 
-$data = ['Def'  => $def, 'words'=>$word, 'nam'=>$w, 'tags'=> $tag, 'user'=>$users, 'synonym'=>$ancestors];
+$data = ['Def'  => $def, 'words'=>$word, 'like'=>$like, 'dislike'=>$dislike,
+    'nam'=>$w, 'tags'=> $tag, 'user'=>$users, 'synonym'=>$ancestors];
 
         return \View::make('word/index')
             ->with($data);
