@@ -37,8 +37,15 @@ Route::post('/like', [
     'uses' => 'wordController@likeDef',
     'as' => 'like'
 ]);
+Route::post('/likePressed', [
+    'uses' => 'wordController@likePressedDef',
+    'as' => 'likePressed'
+]);
 Route::post('/dislike', [
     'uses' => 'wordController@dislikeDef',
     'as' => 'dislike'
 ]);
-
+Route::post('/dislikePressed', [
+    'uses' => 'wordController@dislikePressedDef',
+    'as' => 'dislikePressed'
+]);

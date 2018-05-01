@@ -27,8 +27,8 @@ class wordController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function likeDef(){
-        $is_like = $_POST['isLike'] === 'true';
-        $uid = Auth::user()->id;
+//        $is_like = $_POST['isLike'] === 'true';
+//        $uid = Auth::user()->id;
         $word_id = DB::table('Defs')
             ->select('word_id')
             ->where('id', '=', $_POST['def_id'])
@@ -48,10 +48,10 @@ class wordController extends Controller
             DB::table('likedibo')->insert(
                 ['liker' => auth()->user()->id, 'word_id' => $word_id->word_id, 'def_id' => $_POST['def_id']]
                 );
-            }
-            else {
-                DB::table('defs')->where('id', $_POST['def_id'])->decrement('like_count');
-            }
+        }
+//            else {
+//                DB::table('defs')->where('id', $_POST['def_id'])->decrement('like_count');
+//            }
         //$this->index($_POST);
 
 
@@ -86,6 +86,63 @@ class wordController extends Controller
     }
 
 
+    public function dislikePressedDef(){
+        $word_id = DB::table('Defs')
+            ->select('word_id')
+            ->where('id', '=', $_POST['def_id'])
+            ->get()
+            ->first();
+//        $likedibo=new Likedibo();
+//        $likedibo['liker']=auth()->user()->id;
+//        $likedibo['def_id']=$_POST['def_id'];
+//        $likedibo['word_id']=$word_id;
+//        $likedibo->save();
+        //DB::insert('INSERT INTO `likedibo`(`id`, `liker`, `word_id`, `def_id`, `created_at`, `updated_at`, `expires_at`) VALUES (1,1,1,1,1,1,1)');
+
+//        $wordid=DB::select('select word_id from Defs where id = ?', [$_POST['def_id']]);
+        //  DB::update('UPDATE defs SET like_count=like_count+1 where id=?',$_POST['def_id']);
+        if (Auth::check()) {
+            DB::table('defs')->where('id', $_POST['def_id'])->decrement('dislike_count');
+            DB::table('dislikemarbo')->delete(
+                ['liker' => auth()->user()->id, 'word_id' => $word_id->word_id, 'def_id' => $_POST['def_id']]
+            );
+        }
+
+        //$this->index($_POST);
+
+
+    }
+
+
+    public function likePressedDef(){
+        $word_id = DB::table('Defs')
+            ->select('word_id')
+            ->where('id', '=', $_POST['def_id'])
+            ->get()
+            ->first();
+//        $likedibo=new Likedibo();
+//        $likedibo['liker']=auth()->user()->id;
+//        $likedibo['def_id']=$_POST['def_id'];
+//        $likedibo['word_id']=$word_id;
+//        $likedibo->save();
+        //DB::insert('INSERT INTO `likedibo`(`id`, `liker`, `word_id`, `def_id`, `created_at`, `updated_at`, `expires_at`) VALUES (1,1,1,1,1,1,1)');
+
+//        $wordid=DB::select('select word_id from Defs where id = ?', [$_POST['def_id']]);
+        //  DB::update('UPDATE defs SET like_count=like_count+1 where id=?',$_POST['def_id']);
+        if (Auth::check()) {
+            DB::table('defs')->where('id', $_POST['def_id'])->decrement('like_count');
+            DB::table('likedibo')->delete(
+                ['liker' => auth()->user()->id, 'word_id' => $word_id->word_id, 'def_id' => $_POST['def_id']]
+            );
+        }
+
+        //$this->index($_POST);
+
+
+    }
+
+
+
 
     public function lettersearch($id)
     {
@@ -101,7 +158,7 @@ class wordController extends Controller
         $def = DB::table('Defs')->where('word_id', $request->s)->paginate(5);
 
         $users= DB::select('select id,name from users');
-        $uid = Auth::user()->id;
+       // $uid = Auth::user()->id;
         //  print($def[0]->name);
         $w= DB::table('Words')->where('id', $request->s)->first();
         $word = DB::table('Words')->pluck('name','id')->toArray();
@@ -286,12 +343,14 @@ class wordController extends Controller
     {
         $def = DB::table('Defs')->where('word_id', $id)->paginate(5);
 
-        $uid=Auth::user()->id;
+
+        //$uid=Auth::user()->id;
         //  print($def[0]->name);
         $w= DB::table('Words')->where('id', $id)->first();
         $word = DB::table('Words')->pluck('name','id')->toArray();
-        $like= DB::table('Likedibo')->where('liker', $uid)->get();
-        $dislike= DB::table('dislikemarbo')->where('liker', $uid)->get();
+
+        $like= DB::table('Likedibo')->where('word_id', $id)->get();
+        $dislike= DB::table('dislikemarbo')->where('word_id', $id)->get();
         $users= DB::select('select id,name from users');
         $tag= DB::select('select * from tagtable tt join tags t on t.id=tt.tag_id where def_id = ?', [$def[0]->id]);
         //    $def=4;
@@ -318,8 +377,8 @@ class wordController extends Controller
 
 
 
-$data = ['Def'  => $def, 'words'=>$word, 'like'=>$like, 'dislike'=>$dislike,
-    'nam'=>$w, 'tags'=> $tag, 'user'=>$users, 'synonym'=>$ancestors];
+$data = ['Def'  => $def, 'words'=>$word, 'like'=>$like, 'dislike'=>$dislike, 'nam'=>$w,
+    'tags'=> $tag, 'user'=>$users, 'synonym'=>$ancestors];
 
         return \View::make('word/index')
             ->with($data);

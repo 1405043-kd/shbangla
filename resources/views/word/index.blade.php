@@ -38,22 +38,24 @@
                 {{--<article class="post" data-defid="{{ $d->id }}">--}}
                 <span>
                     <?php $flagLike=0 ?>
-                    @foreach($like as $lk)
-                        @if($lk->def_id==$d->id)
-                            @if($lk->liker==Auth::user()->id)
-                                <?php $flagLike=1 ?>
+                    @if(Auth::user())
+                        @foreach($like as $lk)
+                            @if($lk->def_id==$d->id)
+                                @if($lk->liker==Auth::user()->id)
+                                    <?php $flagLike=1 ?>
+                                @endif
                             @endif
-                        @endif
-                    @endforeach
+                        @endforeach
+                    @endif
                         @if ($flagLike==1)
-                            <div class="btn btn-link btn-lg btn-like">
+                            <div class="btn btn-link btn-lg btn-like" style="color: #4CAF50">
                              <a class="likeBtnPressed" id="<?php echo $d->id; ?>"
                                 onClick="window.location.reload()"> সেরা বুঝাইছে {{$d->like_count}}
                                  <i class="fa fa-thumbs-o-up"> </i>
                              </a>
                             </div>
                         @else
-                            <div class="btn btn-link btn-lg btn-like">
+                            <div class="btn btn-link btn-lg btn-like" style="color: darkred">
                              <a class="likeBtn" id="<?php echo $d->id; ?>"
                                 onClick="window.location.reload()"> সেরা বুঝাইছে {{$d->like_count}}
                                  <i class="fa fa-thumbs-o-up"> </i>
@@ -70,15 +72,17 @@
 
                 <span>
                     <?php $flagdisLike=0 ?>
-                    @foreach($dislike as $dlk)
-                        @if($dlk->def_id==$d->id)
-                            @if($dlk->liker==Auth::user()->id)
-                                <?php $flagdisLike=1 ?>
+                    @if(Auth::user())
+                        @foreach($dislike as $dlk)
+                            @if($dlk->def_id==$d->id)
+                                @if($dlk->liker==Auth::user()->id)
+                                    <?php $flagdisLike=1 ?>
+                                @endif
                             @endif
-                        @endif
-                    @endforeach
+                        @endforeach
+                    @endif
                     @if ($flagdisLike==1)
-                            <div class="btn btn-link btn-lg btn-like">
+                            <div class="btn btn-link btn-lg btn-like" style="color: #4CAF50">
                     <a class="dislikeBtnPressed" id="<?php echo $d->id; ?>" onClick="window.location.reload()">
                         গোগা বুঝাইছে {{$d->dislike_count}}
                         <i class="fa fa-thumbs-o-down"></i>
@@ -86,15 +90,13 @@
                     </div>
 
                     @else
-                    <div class="btn btn-link btn-lg btn-like" style="color: #b8daff">
+                    <div class="btn btn-link btn-lg btn-like" style="color: darkred">
                     <a class="dislikeBtn" id="<?php echo $d->id; ?>" onClick="window.location.reload()">
                         গোগা বুঝাইছে {{$d->dislike_count}}
                         <i class="fa fa-thumbs-o-down"></i>
                     </a>
                     </div>
                     @endif
-
-                    
                 </span>
                 <br>
                 <br>

@@ -457,14 +457,15 @@
             words: true,
 
         });
-
     });
     </script>
 
 <script>
     var token = '{{ Session::token() }}';
     var urlLike = '{{ route('like') }}';
+    var urlLikePressed = '{{ route('likePressed') }}';
     var urldisLike = '{{ route('dislike') }}';
+    var urldisLikePressed = '{{ route('dislikePressed') }}';
     var def_id;
 </script>
 <script>
@@ -475,10 +476,10 @@
 <script>
 $('.likeBtn').click(function(event){
     event.preventDefault();
-    isLike = event.target.previousElementSibling == null;
     def_id=$(this).attr('id');
-      alert('You nigga clicked on def_id '+def_id);
+    alert('You nigga clicked on def_id '+def_id);
     // var isLIke= event.target.previousElementSibling==null;
+    // console.log(23435);
     // def_id=event.target.parentNode.dataset[defid];
 
 
@@ -487,7 +488,7 @@ $('.likeBtn').click(function(event){
         method: 'POST',
         url: urlLike,
         data:{
-            'isLike': isLike,
+            'liked': 1,
             'def_id': def_id,
             '_token': token,
         },
@@ -499,18 +500,47 @@ $('.likeBtn').click(function(event){
         .fail(function (r) {
             alert('Definitions could not be loaded.');
             console.log(r);
-        })
-        .done(function() {
-            event.target.innerText = isLike ? event.target.innerText == 'Like' ? 'You like this post' : 'Like' : event.target.innerText == 'Dislike' ? 'You don\'t like this post' : 'Dislike';
-            if (isLike) {
-                event.target.nextElementSibling.innerText = 'Dislike';
-            } else {
-                event.target.previousElementSibling.innerText = 'Like';
-            }
-    });
+        });
 });
 
 </script>
+
+
+
+<script>
+    $('.likeBtnPressed').click(function(event){
+        event.preventDefault();
+        def_id=$(this).attr('id');
+        alert('You nigga again clicked on def_id '+def_id);
+        // var isLIke= event.target.previousElementSibling==null;
+        // console.log(23435);
+        // def_id=event.target.parentNode.dataset[defid];
+
+
+
+        $.ajax({
+            method: 'POST',
+            url: urlLikePressed,
+            data:{
+                'liked': 1,
+                'def_id': def_id,
+                '_token': token,
+            },
+        })
+            .success(function (r) {
+                alert('database e dhuika gese hogar nati :\') ');
+                console.log(r);
+            })
+            .fail(function (r) {
+                alert('Definitions could not be loaded.');
+                console.log(r);
+            });
+    });
+
+</script>
+
+
+
 
 <script>
     $('.dislikeBtn').click(function(event){
@@ -545,6 +575,42 @@ $('.likeBtn').click(function(event){
 
 
 </script>
+
+<script>
+    $('.dislikeBtnPressed').click(function(event){
+        event.preventDefault();
+        def_id=$(this).attr('id');
+        alert('You nigga again clicked on def_id '+def_id);
+        // var isLIke= event.target.previousElementSibling==null;
+        // console.log(23435);
+        // def_id=event.target.parentNode.dataset[defid];
+
+
+
+        $.ajax({
+            method: 'POST',
+            url: urldisLikePressed,
+            data:{
+                'disliked': 1,
+                'def_id': def_id,
+                '_token': token,
+            },
+        })
+            .success(function (r) {
+                alert('database e dhuika gese hogar nati :\') ');
+                console.log(r);
+            })
+            .fail(function (r) {
+                alert('Definitions could not be loaded.');
+                console.log(r);
+            });
+    });
+
+
+
+</script>
+
+
 
 <script>
     var acc = document.getElementsByClassName("accordion");
