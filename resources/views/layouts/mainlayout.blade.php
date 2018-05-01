@@ -477,7 +477,7 @@
 $('.likeBtn').click(function(event){
     event.preventDefault();
     def_id=$(this).attr('id');
-    alert('You nigga clicked on def_id '+def_id);
+    // alert('You nigga clicked on def_id '+def_id);
     // var isLIke= event.target.previousElementSibling==null;
     // console.log(23435);
     // def_id=event.target.parentNode.dataset[defid];
@@ -492,13 +492,14 @@ $('.likeBtn').click(function(event){
             'def_id': def_id,
             '_token': token,
         },
+
     })
         .success(function (r) {
-            alert('database e dhuika gese hogar nati :\') ');
+            // alert('database e dhuika gese hogar nati :\') ');
             console.log(r);
         })
         .fail(function (r) {
-            alert('Definitions could not be loaded.');
+            // alert('Definitions could not be loaded.');
             console.log(r);
         });
 });
@@ -511,7 +512,7 @@ $('.likeBtn').click(function(event){
     $('.likeBtnPressed').click(function(event){
         event.preventDefault();
         def_id=$(this).attr('id');
-        alert('You nigga again clicked on def_id '+def_id);
+        // alert('You nigga again clicked on def_id '+def_id);
         // var isLIke= event.target.previousElementSibling==null;
         // console.log(23435);
         // def_id=event.target.parentNode.dataset[defid];
@@ -528,11 +529,11 @@ $('.likeBtn').click(function(event){
             },
         })
             .success(function (r) {
-                alert('database e dhuika gese hogar nati :\') ');
+                // alert('database e dhuika gese hogar nati :\') ');
                 console.log(r);
             })
             .fail(function (r) {
-                alert('Definitions could not be loaded.');
+                // alert('Definitions could not be loaded.');
                 console.log(r);
             });
     });
@@ -546,7 +547,7 @@ $('.likeBtn').click(function(event){
     $('.dislikeBtn').click(function(event){
         event.preventDefault();
         def_id=$(this).attr('id');
-        alert('You nigga clicked on def_id '+def_id);
+        // alert('You nigga clicked on def_id '+def_id);
         // var isLIke= event.target.previousElementSibling==null;
         // console.log(23435);
         // def_id=event.target.parentNode.dataset[defid];
@@ -563,11 +564,11 @@ $('.likeBtn').click(function(event){
             },
         })
             .success(function (r) {
-                alert('database e dhuika gese hogar nati :\') ');
+                // alert('database e dhuika gese hogar nati :\') ');
                 console.log(r);
             })
             .fail(function (r) {
-                alert('Definitions could not be loaded.');
+                // alert('Definitions could not be loaded.');
                 console.log(r);
             });
     });
@@ -580,7 +581,7 @@ $('.likeBtn').click(function(event){
     $('.dislikeBtnPressed').click(function(event){
         event.preventDefault();
         def_id=$(this).attr('id');
-        alert('You nigga again clicked on def_id '+def_id);
+        // alert('You nigga again clicked on def_id '+def_id);
         // var isLIke= event.target.previousElementSibling==null;
         // console.log(23435);
         // def_id=event.target.parentNode.dataset[defid];
@@ -597,11 +598,11 @@ $('.likeBtn').click(function(event){
             },
         })
             .success(function (r) {
-                alert('database e dhuika gese hogar nati :\') ');
+                // alert('database e dhuika gese hogar nati :\') ');
                 console.log(r);
             })
             .fail(function (r) {
-                alert('Definitions could not be loaded.');
+                // alert('Definitions could not be loaded.');
                 console.log(r);
             });
     });

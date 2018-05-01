@@ -50,14 +50,18 @@
                         @if ($flagLike==1)
                             <div class="btn btn-link btn-lg btn-like" style="color: #4CAF50">
                              <a class="likeBtnPressed" id="<?php echo $d->id; ?>"
-                                onClick="window.location.reload()"> সেরা বুঝাইছে {{$d->like_count}}
+                                onClick="setTimeout(function(){
+    window.location.reload();
+},1000); "> সেরা বুঝাইছে {{$d->like_count}}
                                  <i class="fa fa-thumbs-o-up"> </i>
                              </a>
                             </div>
                         @else
                             <div class="btn btn-link btn-lg btn-like" style="color: darkred">
                              <a class="likeBtn" id="<?php echo $d->id; ?>"
-                                onClick="window.location.reload()"> সেরা বুঝাইছে {{$d->like_count}}
+                                onClick="setTimeout(function(){
+    window.location.reload();
+},1000); "> সেরা বুঝাইছে {{$d->like_count}}
                                  <i class="fa fa-thumbs-o-up"> </i>
                              </a>
                             </div>
@@ -83,7 +87,9 @@
                     @endif
                     @if ($flagdisLike==1)
                             <div class="btn btn-link btn-lg btn-like" style="color: #4CAF50">
-                    <a class="dislikeBtnPressed" id="<?php echo $d->id; ?>" onClick="window.location.reload()">
+                    <a class="dislikeBtnPressed" id="<?php echo $d->id; ?>" onClick="setTimeout(function(){
+    window.location.reload();
+},1000); ">
                         গোগা বুঝাইছে {{$d->dislike_count}}
                         <i class="fa fa-thumbs-o-down"></i>
                     </a>
@@ -91,7 +97,9 @@
 
                     @else
                     <div class="btn btn-link btn-lg btn-like" style="color: darkred">
-                    <a class="dislikeBtn" id="<?php echo $d->id; ?>" onClick="window.location.reload()">
+                    <a class="dislikeBtn" id="<?php echo $d->id; ?>" onClick="setTimeout(function(){
+    window.location.reload();
+},1000); ">
                         গোগা বুঝাইছে {{$d->dislike_count}}
                         <i class="fa fa-thumbs-o-down"></i>
                     </a>

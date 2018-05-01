@@ -44,10 +44,10 @@ class wordController extends Controller
 //        $wordid=DB::select('select word_id from Defs where id = ?', [$_POST['def_id']]);
       //  DB::update('UPDATE defs SET like_count=like_count+1 where id=?',$_POST['def_id']);
         if (Auth::check()) {
-            DB::table('defs')->where('id', $_POST['def_id'])->increment('like_count');
             DB::table('likedibo')->insert(
                 ['liker' => auth()->user()->id, 'word_id' => $word_id->word_id, 'def_id' => $_POST['def_id']]
                 );
+            DB::table('defs')->where('id', $_POST['def_id'])->increment('like_count');
         }
 //            else {
 //                DB::table('defs')->where('id', $_POST['def_id'])->decrement('like_count');
@@ -74,10 +74,10 @@ class wordController extends Controller
 //        $wordid=DB::select('select word_id from Defs where id = ?', [$_POST['def_id']]);
         //  DB::update('UPDATE defs SET like_count=like_count+1 where id=?',$_POST['def_id']);
         if (Auth::check()) {
-            DB::table('defs')->where('id', $_POST['def_id'])->increment('dislike_count');
             DB::table('dislikemarbo')->insert(
                 ['liker' => auth()->user()->id, 'word_id' => $word_id->word_id, 'def_id' => $_POST['def_id']]
             );
+            DB::table('defs')->where('id', $_POST['def_id'])->increment('dislike_count');
         }
 
         //$this->index($_POST);
@@ -102,10 +102,11 @@ class wordController extends Controller
 //        $wordid=DB::select('select word_id from Defs where id = ?', [$_POST['def_id']]);
         //  DB::update('UPDATE defs SET like_count=like_count+1 where id=?',$_POST['def_id']);
         if (Auth::check()) {
+            DB::table('dislikemarbo')
+                ->where(['liker'=>auth()->user()->id, 'def_id'=> $_POST['def_id']])
+                ->delete();
             DB::table('defs')->where('id', $_POST['def_id'])->decrement('dislike_count');
-            DB::table('dislikemarbo')->delete(
-                ['liker' => auth()->user()->id, 'word_id' => $word_id->word_id, 'def_id' => $_POST['def_id']]
-            );
+
         }
 
         //$this->index($_POST);
@@ -130,10 +131,10 @@ class wordController extends Controller
 //        $wordid=DB::select('select word_id from Defs where id = ?', [$_POST['def_id']]);
         //  DB::update('UPDATE defs SET like_count=like_count+1 where id=?',$_POST['def_id']);
         if (Auth::check()) {
+            DB::table('likedibo')
+                ->where(['liker'=>auth()->user()->id, 'def_id'=> $_POST['def_id']])
+                ->delete();
             DB::table('defs')->where('id', $_POST['def_id'])->decrement('like_count');
-            DB::table('likedibo')->delete(
-                ['liker' => auth()->user()->id, 'word_id' => $word_id->word_id, 'def_id' => $_POST['def_id']]
-            );
         }
 
         //$this->index($_POST);
