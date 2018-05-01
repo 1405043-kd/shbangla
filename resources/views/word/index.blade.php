@@ -34,6 +34,8 @@
                 <h2 class="card-header">{{ $nam->name }}</h2>
                 <br>
 
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 
                 {{--<article class="post" data-defid="{{ $d->id }}">--}}
                 <span>
@@ -48,20 +50,20 @@
                         @endforeach
                     @endif
                         @if ($flagLike==1)
-                            <div class="btn btn-link btn-lg btn-like" style="color: #4CAF50">
+                            <div class="btn btn-link btn-lg btn-like" style="color:green;text-decoration:none">
                              <a class="likeBtnPressed" id="<?php echo $d->id; ?>"
                                 onClick="setTimeout(function(){
     window.location.reload();
-},1000); "> সেরা বুঝাইছে {{$d->like_count}}
+},1000); "> <strong>সেরা</strong>  {{$d->like_count}}
                                  <i class="fa fa-thumbs-o-up"> </i>
                              </a>
                             </div>
                         @else
-                            <div class="btn btn-link btn-lg btn-like" style="color: darkred">
+                            <div class="btn btn-link btn-lg btn-like" style="color: black;text-decoration:none">
                              <a class="likeBtn" id="<?php echo $d->id; ?>"
                                 onClick="setTimeout(function(){
     window.location.reload();
-},1000); "> সেরা বুঝাইছে {{$d->like_count}}
+},1000); "> <strong>সেরা</strong>   {{$d->like_count}}
                                  <i class="fa fa-thumbs-o-up"> </i>
                              </a>
                             </div>
@@ -69,9 +71,6 @@
 
                 </span>
 
-                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 
 
                 <span>
@@ -86,21 +85,21 @@
                         @endforeach
                     @endif
                     @if ($flagdisLike==1)
-                            <div class="btn btn-link btn-lg btn-like" style="color: #4CAF50">
+                            <div class="btn btn-link btn-lg btn-like" style="color: goldenrod;text-decoration:none">
                     <a class="dislikeBtnPressed" id="<?php echo $d->id; ?>" onClick="setTimeout(function(){
     window.location.reload();
 },1000); ">
-                        গোগা বুঝাইছে {{$d->dislike_count}}
+                        <strong> গোগা </strong> {{$d->dislike_count}}
                         <i class="fa fa-thumbs-o-down"></i>
                     </a>
                     </div>
 
                     @else
-                    <div class="btn btn-link btn-lg btn-like" style="color: darkred">
+                    <div class="btn btn-link btn-lg btn-like" style="color: black;text-decoration:none">
                     <a class="dislikeBtn" id="<?php echo $d->id; ?>" onClick="setTimeout(function(){
     window.location.reload();
 },1000); ">
-                        গোগা বুঝাইছে {{$d->dislike_count}}
+                        <strong>গোগা</strong> {{$d->dislike_count}}
                         <i class="fa fa-thumbs-o-down"></i>
                     </a>
                     </div>
@@ -109,10 +108,10 @@
                 <br>
                 <br>
                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                আখ্যা//<br>
+                <strong>_\ আখ্যা /_</strong><br>
                 &nbsp;&nbsp;&nbsp;{{ $d->def }} <br><br>
 
-                &nbsp;&nbsp;&nbsp;একটি প্রায়োগিক দৃষ্টান্ত// <br>
+                &nbsp;&nbsp;&nbsp;<strong>_\ একটি প্রায়োগিক দৃষ্টান্ত /_</strong> <br>
                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ $d->sentence_ex }} <br><br>
 
                 &nbsp;&nbsp;&nbsp;{{ \Carbon\Carbon::parse($d->created_at)->format('M d,Y')}} তারিখে <br>

@@ -295,7 +295,7 @@
 
 
                 <li class="nav-item">
-                    <a class="nav-link"  href={{ url('/home') }}>ঘরঘরঘর
+                    <a class="nav-link"  href={{ url('/home') }}>কেন্দ্র
                     </a>
                 </li>
 
@@ -494,14 +494,14 @@ $('.likeBtn').click(function(event){
         },
 
     })
-        .success(function (r) {
-            // alert('database e dhuika gese hogar nati :\') ');
-            console.log(r);
-        })
-        .fail(function (r) {
-            // alert('Definitions could not be loaded.');
-            console.log(r);
-        });
+        // .success(function (r) {
+        //     // alert('database e dhuika gese hogar nati :\') ');
+        //     console.log(r);
+        // })
+        // .fail(function (r) {
+        //     // alert('Definitions could not be loaded.');
+        //     console.log(r);
+        // });
 });
 
 </script>
@@ -528,14 +528,14 @@ $('.likeBtn').click(function(event){
                 '_token': token,
             },
         })
-            .success(function (r) {
-                // alert('database e dhuika gese hogar nati :\') ');
-                console.log(r);
-            })
-            .fail(function (r) {
-                // alert('Definitions could not be loaded.');
-                console.log(r);
-            });
+            // .success(function (r) {
+            //     // alert('database e dhuika gese hogar nati :\') ');
+            //     console.log(r);
+            // })
+            // .fail(function (r) {
+            //     // alert('Definitions could not be loaded.');
+            //     console.log(r);
+            // });
     });
 
 </script>
@@ -563,14 +563,14 @@ $('.likeBtn').click(function(event){
                 '_token': token,
             },
         })
-            .success(function (r) {
-                // alert('database e dhuika gese hogar nati :\') ');
-                console.log(r);
-            })
-            .fail(function (r) {
-                // alert('Definitions could not be loaded.');
-                console.log(r);
-            });
+            // .success(function (r) {
+            //     // alert('database e dhuika gese hogar nati :\') ');
+            //     console.log(r);
+            // })
+            // .fail(function (r) {
+            //     // alert('Definitions could not be loaded.');
+            //     console.log(r);
+            // });
     });
 
 
@@ -597,14 +597,14 @@ $('.likeBtn').click(function(event){
                 '_token': token,
             },
         })
-            .success(function (r) {
-                // alert('database e dhuika gese hogar nati :\') ');
-                console.log(r);
-            })
-            .fail(function (r) {
-                // alert('Definitions could not be loaded.');
-                console.log(r);
-            });
+            // .success(function (r) {
+            //     // alert('database e dhuika gese hogar nati :\') ');
+            //     console.log(r);
+            // })
+            // .fail(function (r) {
+            //     // alert('Definitions could not be loaded.');
+            //     console.log(r);
+            // });
     });
 
 
