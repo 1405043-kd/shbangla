@@ -154,6 +154,20 @@ class wordController extends Controller
             ->with(['words'=>$word, 'letter_search'=>$w]);
     }
 
+    public function showdef($id) {
+        $def = DB::table('Defs')->where('id', $id)->first();
+        $w= DB::table('Words')->where('id', $def->word_id)->first();
+        $word = DB::table('Words')->pluck('name','id')->toArray();
+        $users= DB::select('select id,name from users');
+        $like= DB::table('likedibo')->where('word_id', $w->id)->get();
+        $dislike= DB::table('dislikemarbo')->where('word_id', $w->id)->get();
+        $tag= DB::select('select * from tagtable tt join tags t on t.id=tt.tag_id where def_id = ?', [$id]);
+        $data = ['d'  => $def, 'words'=>$word, 'nam'=>$w, 'like'=>$like, 'dislike'=>$dislike,
+            'nam'=>$w, 'tags'=> $tag, 'user'=> $users];
+        return \View::make('defpage')
+            ->with($data);
+    }
+
     public function index(Request $request)
     {
         $def = DB::table('Defs')->where('word_id', $request->s)->paginate(5);
@@ -185,7 +199,7 @@ class wordController extends Controller
             'nam'=>$w, 'tags'=> $tag, 'user'=> $users, 'synonym'=>$ancestors];
 
         if ($request->ajax()) {
-            return Response::json(\View::make('word/index')->with($data));
+            return Response::json(\View::make('load')->with($data));
         }
         return \View::make('word/index')
             ->with($data);

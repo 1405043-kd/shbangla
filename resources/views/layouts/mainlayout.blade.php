@@ -430,27 +430,40 @@
 
 <script>
     $(window).on('hashchange', function() {
+        if (window.location.hash) {
+            var page = window.location.hash.replace('#', '');
+            if (page == Number.NaN || page <= 0) {
+                return false;
+            }
+            else{
+                getData(page);
+            }
+        }
+    });
 
+    $(document).ready(function() {
         $('body').on('click', '.pagination a', function(e) {
             e.preventDefault();
+            var myurl = $(this).attr('href');
+            var page=$(this).attr('href').split('page=')[1];
             //  $('#load').append('<img style="position: absolute; left: 0; top: 0; z-index: 100000;" >');
-            getDefs($(this).attr('href').split('page=')[1]);
+            getDefs(page);
         });
-    });
-    $(document).ready(function() {
     });
 
     function getDefs(page) {
         $.ajax({
             url : '?page=' + page,
+            type: "get",
             dataType: 'json',
         }).done(function (data) {
-            $('.defs').html(data);
+          //  $("#card my-4").empty().html(data);
             location.hash = page;
         }).fail(function () {
             alert('Definitions could not be loaded.');
         });
     }
+
     $(document).ready(function(){
         $('#words').select2({
             placeholder : "আমি অনেক লোনলি",
